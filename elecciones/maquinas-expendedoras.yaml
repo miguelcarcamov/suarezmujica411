@@ -53,8 +53,9 @@ pendientes:
 
 preguntas:
   - pregunta: "¿Aprueba que la comunidad instale máquinas expendedoras (Amawa, Nescafé y Coca-Cola) en espacios comunes, para que el ingreso que generen sea un recurso de la comunidad?"
+    # En Belenios: solo estas dos respuestas + activar "Blank vote is allowed"
+    # (voto en blanco nativo). No poner "Nulo" como opción: en Chile el nulo es
+    # una cédula inválida; Belenios descarta boletas inválidas y no las cuenta.
     opciones:
       - "Apruebo"
       - "Rechazo"
-      - "Blanco"
-      - "Nulo"

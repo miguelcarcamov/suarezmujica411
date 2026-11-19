@@ -56,7 +56,10 @@
     <div class="pregunta" aria-label="Vista previa. No se vota aquí.">
       <p class="pregunta-etiqueta">Vista previa · no se vota aquí</p>
       <h3>{{ p.pregunta }}</h3>
-      <ul>{% for o in p.opciones %}<li><span class="opcion-marca" aria-hidden="true"></span>{{ o }}</li>{% endfor %}</ul>
+      <ul>
+        {% for o in p.opciones %}<li><span class="opcion-marca" aria-hidden="true"></span>{{ o }}</li>{% endfor %}
+        <li><span class="opcion-marca" aria-hidden="true"></span>Voto en blanco <span class="opcion-nota">(opción de Belenios, no una respuesta más)</span></li>
+      </ul>
     </div>
     {% endfor %}
   </section>
@@ -114,7 +117,7 @@
     <ul class="reglas">
       <li>{% if e.modalidad == "Consulta por escrito" %}No hay que ir a una reunión. Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% elif e.modalidad %}La forma de votar es: {{ e.modalidad }}. El voto se emite en Belenios, no en esta página.{% else %}Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% endif %}</li>
       <li>{% if e.ponderada %}Cada departamento pesa según su porcentaje en el reglamento.{% else %}Cada departamento tiene un voto, del mismo valor.{% endif %}</li>
-      <li>En Belenios hay que marcar una opción: Apruebo, Rechazo, Blanco o Nulo. Blanco y Nulo no cuentan a favor para el 66 %.</li>
+      <li>En Belenios puedes marcar Apruebo, Rechazo o voto en blanco. El blanco se registra, pero no cuenta a favor para el 66 %. Un voto nulo, como en Chile, sería una papeleta inválida: Belenios no la acepta en la urna.</li>
       <li>Esta página solo informa. Tocando una opción aquí no pasa nada: no son botones de voto.</li>
     </ul>
   </section>
@@ -173,7 +176,7 @@
       <li><strong>Abre los correos de Belenios.</strong> Se envían cuando la votación abre, al correo que quedó en la lista (por defecto el del propietario registrado; si hubo poder de arrendatario aprobado a tiempo, el que indicaron en esa autorización). Ahí vienen el acceso y los códigos. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el de otro departamento.</li>
       <li><strong>Aprieta «Ir a Belenios a votar» en el recuadro de esta página.</strong> Solo aparece cuando la votación está abierta. Se abre Belenios: esa es la página donde sí se vota. No marques nada en esta ficha.</li>
       <li><strong>Entra en Belenios</strong> con lo que te llegó al correo (enlace personal o códigos, según diga el mensaje).</li>
-      <li><strong>En Belenios, elige una opción.</strong> Son las mismas que leíste más arriba (Apruebo, Rechazo, Blanco o Nulo). Esa elección cuenta solo ahí.</li>
+      <li><strong>En Belenios, elige una opción.</strong> Apruebo, Rechazo o voto en blanco (si Belenios lo ofrece en esa pantalla). Esa elección cuenta solo ahí.</li>
       <li><strong>Confirma el voto en Belenios</strong> cuando el sistema te lo pida (por ejemplo, con un código del correo).</li>
       <li><strong>Anota o fotografía el número de comprobante</strong> que aparece al final en Belenios, antes de cerrar. Con ese número se comprueba que el voto quedó guardado, sin mostrar lo que votaste.</li>
     </ol>
@@ -184,6 +187,10 @@
     <p class="ayuda">Abre cada pregunta para leer la respuesta.</p>
     <details><summary>¿Puedo votar desde esta página?</summary>
       <p>No. Esta página solo informa. Aunque veas las opciones más arriba, aquí no se registra ningún voto. Para votar tienes que apretar «Ir a Belenios a votar» y marcar la opción en Belenios.</p></details>
+    <details><summary>¿Qué pasa si voto en blanco o nulo?</summary>
+      <p><strong>Blanco:</strong> en Chile (elecciones Servel) el blanco se registra, pero para calcular mayorías se trata como no emitido: no suma a ninguna candidatura. En esta consulta, Belenios puede ofrecer voto en blanco nativo: queda contado como blanco y <strong>no suma a Apruebo</strong> para el 66 %.</p>
+      <p><strong>Nulo:</strong> en Chile es una cédula inválida (marcas confusas, más de una preferencia, etc.). También se trata como no emitido para la mayoría. En Belenios no hay botón «Nulo»: si el voto es inválido, el sistema no lo deja entrar a la urna.</p>
+      <p>Para aprobar hace falta el 66 % de los departamentos en <strong>Apruebo</strong>. Blanco, nulo o no votar no ayudan a ese 66 %.</p></details>
     <details><summary>¿El comité o la administración pueden manipular el resultado?</summary>
       <p>No. El total se arma en Belenios a partir de los votos cifrados. Varios trustees tienen que participar para abrir ese total. Además, cualquiera puede revisar la urna pública y el resultado en Belenios. Los roles (administrador, credenciales y trustees) están publicados más arriba, en «Cómo se cuida que el proceso sea limpio».</p></details>
     {% if e.tipo_sesion == "reforzada" %}
@@ -213,7 +220,7 @@
       <p>No. Ni el comité, ni la administración, ni esta página, ni ninguna persona puede ver tu voto. Al cerrar se publica cuántos votos tuvo cada opción, no el voto de cada departamento.</p>
       <p>Así funciona, en simple:</p>
       <ol>
-        <li>Eliges una opción en Belenios (Apruebo, Rechazo, Blanco o Nulo).</li>
+        <li>Eliges una opción en Belenios (Apruebo, Rechazo o blanco).</li>
         <li>En tu celular o computador, el voto se convierte en un código que nadie puede leer. Eso pasa antes de enviarlo.</li>
         <li>A la urna llega solo ese código, no el texto de la opción.</li>
         <li>Al cerrar, el sistema suma todos esos códigos y solo entonces abre el resultado total.</li>
