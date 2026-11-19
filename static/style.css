@@ -260,11 +260,11 @@ details {
 }
 summary { cursor: pointer; font-weight: 600; min-height: 48px; display: flex; align-items: center; }
 details p { margin: 0 0 14px; color: var(--tinta); }
-details ol {
+details ol, details ul {
   margin: 0 0 14px; padding-left: 1.25rem; max-width: 40em;
   color: var(--tinta);
 }
-details ol li { margin: 0 0 .45rem; }
+details ol li, details ul li { margin: 0 0 .45rem; }
 
 .pie {
   border-top: 1px solid var(--linea);

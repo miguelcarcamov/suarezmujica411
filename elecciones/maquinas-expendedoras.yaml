@@ -1,13 +1,13 @@
-# Consulta en preparación. Mientras borrador sea true no se exigen fechas
-# y el sitio no ofrece el botón de votar.
 titulo: "Máquinas expendedoras (Amawa, Nescafé y Coca-Cola)"
 resumen: "Si se instalan máquinas expendedoras (Amawa, Nescafé y Coca-Cola) en espacios comunes, y ese ingreso queda para la comunidad."
-borrador: true
+borrador: false
 
-# Fechas en hora de Chile, formato AAAA-MM-DD HH:MM. Completar antes de abrir.
-# sesion_informativa: "AAAA-MM-DD HH:MM"
-# apertura: "AAAA-MM-DD HH:MM"
-# cierre: "AAAA-MM-DD HH:MM"
+# Fechas en hora de Chile, formato AAAA-MM-DD HH:MM.
+# La lista de Belenios no se puede cambiar después de abrir: poderes antes de la apertura.
+apertura: "2026-11-24 12:00"
+cierre: "2026-11-28 12:00"
+# Plazo para recibir poderes de arrendatarios (antes de cerrar la lista y abrir Belenios).
+plazo_poder: "2026-11-23 20:00"
 
 modalidad: "Consulta por escrito"
 # Mayoría reforzada: constituir y aprobar con al menos el 66 % de los derechos.
@@ -24,7 +24,7 @@ url_resultados: ""
 
 pendientes:
   - "Número de departamentos con derecho a voto"
-  - "Fecha de la sesión informativa, de la apertura y del cierre"
+  - "Enlace de Belenios (url_belenios) antes de la apertura"
   - "Lugar exacto donde irían las máquinas"
   - "Plazo del convenio y cómo se puede terminar"
   - "Cómo se calcula el ingreso y a qué fondo entra"

@@ -39,7 +39,7 @@ def cargar_eleccion(ruta, tz, cfg):
     if faltan:
         sys.exit(f"[{ruta.name}] faltan campos: {', '.join(faltan)}")
     d["slug"] = ruta.stem
-    for campo in ("apertura", "cierre", "sesion_informativa"):
+    for campo in ("apertura", "cierre", "sesion_informativa", "plazo_poder"):
         if d.get(campo):
             d[campo] = fecha(d[campo], tz, campo, ruta.name)
     if d.get("apertura") and d.get("cierre") and d["cierre"] <= d["apertura"]:

@@ -135,7 +135,7 @@
     <h2>Cómo votar, en este orden</h2>
     <p>El voto se emite <strong>solo en Belenios</strong>. Esta página te explica y te lleva hasta ahí. Sigue los pasos del 1 al 6. Puedes usar el celular o el computador. No instales una aplicación ni crees una cuenta.</p>
     <ol class="pasos">
-      <li><strong>Abre los correos de Belenios.</strong> Llegan al correo del departamento. Ahí vienen el acceso y los códigos para votar. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el de otro departamento.</li>
+      <li><strong>Abre los correos de Belenios.</strong> Llegan al correo registrado del propietario del departamento. Si el comité aprobó un poder de arrendatario a tiempo, llegan al correo que indicaron en esa autorización. Ahí vienen el acceso y los códigos para votar. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el de otro departamento.</li>
       <li><strong>Aprieta «Ir a Belenios a votar» en el recuadro de esta página.</strong> Solo aparece cuando la votación está abierta. Se abre Belenios: esa es la página donde sí se vota. No marques nada en esta ficha.</li>
       <li><strong>Entra en Belenios</strong> con lo que te llegó al correo (enlace personal o códigos, según diga el mensaje).</li>
       <li><strong>En Belenios, elige una opción.</strong> Son las mismas que leíste más arriba (Apruebo o Rechazo). Esa elección cuenta solo ahí.</li>
@@ -151,16 +151,26 @@
       <p>No. Esta página solo informa. Aunque veas Apruebo y Rechazo más arriba, aquí no se registra ningún voto. Para votar tienes que apretar «Ir a Belenios a votar» y marcar la opción en Belenios.</p></details>
     {% if e.tipo_sesion == "reforzada" %}
     <details><summary>¿Qué pasa si soy arrendatario?</summary>
-      <p>Arrendar no alcanza para votar en esta consulta. Necesitas una autorización expresa del copropietario (poder simple, si así lo indica el reglamento del edificio). Sin eso, el acceso de Belenios queda para el copropietario al día.</p>
+      <p>Arrendar no alcanza para votar en esta consulta. Necesitas una autorización expresa del copropietario (poder simple, si así lo indica el reglamento del edificio). Sin eso, el acceso de Belenios queda para el propietario registrado.</p>
+      <p>Importante: cuando Belenios ya está abierta, <strong>no se puede agregar gente ni cambiar el correo</strong> de un departamento. Por eso el poder tiene que llegar antes de abrir los votos.</p>
+      <p>Plazos:</p>
+      <ul>
+        <li><strong>Recepción del poder:</strong> hasta el {% if e.plazo_poder %}{{ e.plazo_poder|fecha }}{% elif e.apertura %}{{ e.apertura|fecha }}{% else %}momento que fije el comité{% endif %}.</li>
+        <li><strong>Respuesta del comité:</strong> el comité confirma o rechaza{% if e.apertura %} a más tardar antes de la apertura ({{ e.apertura|fecha }}){% else %} antes de que se abran los votos{% endif %}, para alcanzar a actualizar la lista de Belenios.</li>
+      </ul>
       <p>Puedes hacer esto:</p>
       <ol>
         <li><strong>Habla con tu copropietario</strong> y solicítale el poder simple para votar en esta consulta, por tu departamento.</li>
         <li><strong>El copropietario firma</strong> esa autorización a tu nombre y con el número de departamento.</li>
-        <li><strong>Envíenla al comité</strong>{% if e.apertura %} antes del {{ e.apertura|fecha }}{% else %} antes de que se abran los votos{% endif %}{% if cfg.contacto_email %}, a <a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% endif %}. Incluyan el correo donde debe llegar Belenios.</li>
-        <li><strong>Esperen la confirmación del comité.</strong> Recién ahí el acceso de Belenios puede quedar a tu nombre. Un departamento = un voto: no votan dueño y arrendatario a la vez.</li>
+        <li><strong>Envíenla al comité</strong> dentro del plazo de recepción{% if cfg.contacto_email %}, a <a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% endif %}. Incluyan el correo donde debe llegar Belenios.</li>
+        <li><strong>Esperen la confirmación del comité</strong> dentro del plazo de respuesta. Recién ahí el acceso de Belenios puede quedar a tu nombre. Un departamento = un voto: no votan dueño y arrendatario a la vez.</li>
         <li><strong>Cuando la votación esté abierta,</strong> votas en Belenios (no en esta página), con el acceso que llegó a ese correo.</li>
       </ol>
-      <p>Si el copropietario no autoriza, no puedes votar tú. El voto sigue siendo del copropietario hábil.</p></details>
+      <p>Si el copropietario no autoriza, o el poder llega fuera de plazo, no puedes votar tú. El voto sigue siendo del propietario registrado.</p></details>
+    <details><summary>¿A quién le llega el correo de Belenios si el depto está arrendado?</summary>
+      <p>Por defecto, Belenios llega al <strong>correo registrado del propietario</strong> de esa unidad.</p>
+      <p>Si el propietario cede el voto al arrendatario y el comité lo aprueba a tiempo, Belenios se envía al correo del arrendatario que indiquen. <strong>No es el mismo enlace reenviado:</strong> el comité actualiza el correo en la lista y se genera un acceso para esa casilla. El propietario no debe usar un correo anterior si el voto quedó cedido; un departamento tiene un solo acceso válido.</p>
+      <p>Si ya te llegó el correo como propietario y después cedes el voto, avisa al comité de inmediato para actualizar la lista y reenviar el acceso al arrendatario.</p></details>
     {% endif %}
     <details><summary>¿Alguien puede ver lo que voté?</summary>
       <p>No. Ni el comité, ni la administración, ni esta página, ni ninguna persona puede ver tu voto. Al cerrar se publica cuántos votos tuvo cada opción, no el voto de cada departamento.</p>
