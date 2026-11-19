@@ -53,11 +53,10 @@
     <h2>De qué se vota</h2>
     <p class="nota-novoto"><strong>Aquí no se vota.</strong> Esto es solo para que leas la pregunta. Para votar tienes que ir a Belenios, con el botón del recuadro de estado.</p>
     {% for p in e.preguntas %}
-    <div class="pregunta" aria-label="Pregunta de solo lectura. No se vota aquí.">
-      <p class="pregunta-etiqueta">Pregunta (solo lectura)</p>
+    <div class="pregunta" aria-label="Vista previa. No se vota aquí.">
+      <p class="pregunta-etiqueta">Vista previa · no se vota aquí</p>
       <h3>{{ p.pregunta }}</h3>
-      <p class="pregunta-etiqueta">Opciones que verás en Belenios</p>
-      <ul>{% for o in p.opciones %}<li>{{ o }}</li>{% endfor %}</ul>
+      <ul>{% for o in p.opciones %}<li><span class="opcion-marca" aria-hidden="true"></span>{{ o }}</li>{% endfor %}</ul>
     </div>
     {% endfor %}
   </section>
