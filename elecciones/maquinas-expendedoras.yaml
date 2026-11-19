@@ -56,3 +56,5 @@ preguntas:
     opciones:
       - "Apruebo"
       - "Rechazo"
+      - "Blanco"
+      - "Nulo"

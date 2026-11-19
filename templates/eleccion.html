@@ -114,8 +114,8 @@
     <ul class="reglas">
       <li>{% if e.modalidad == "Consulta por escrito" %}No hay que ir a una reunión. Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% elif e.modalidad %}La forma de votar es: {{ e.modalidad }}. El voto se emite en Belenios, no en esta página.{% else %}Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% endif %}</li>
       <li>{% if e.ponderada %}Cada departamento pesa según su porcentaje en el reglamento.{% else %}Cada departamento tiene un voto, del mismo valor.{% endif %}</li>
-      <li>En Belenios hay que elegir una opción. No se puede dejar en blanco.</li>
-      <li>Esta página solo informa. Tocando Apruebo o Rechazo aquí no pasa nada: no son botones de voto.</li>
+      <li>En Belenios hay que marcar una opción: Apruebo, Rechazo, Blanco o Nulo. Blanco y Nulo no cuentan a favor para el 66 %.</li>
+      <li>Esta página solo informa. Tocando una opción aquí no pasa nada: no son botones de voto.</li>
     </ul>
   </section>
 
@@ -148,7 +148,7 @@
       </article>
     </div>
     <ul class="reglas">
-      <li>Cuando la votación abre, la lista de correos en Belenios ya no se puede cambiar.</li>
+      <li>Los correos de Belenios se envían al abrir la votación, a la lista ya cerrada. Después no se puede agregar gente ni cambiar un correo.</li>
       <li>Al cerrar, el resultado se publica en Belenios. Este sitio solo enlaza; no cuenta votos.</li>
       <li>Cualquier vecino puede revisar la urna pública y el total en Belenios.</li>
     </ul>
@@ -170,10 +170,10 @@
     <h2>Cómo votar, en este orden</h2>
     <p>El voto se emite <strong>solo en Belenios</strong>. Esta página te explica y te lleva hasta ahí. Sigue los pasos del 1 al 6. Puedes usar el celular o el computador. No instales una aplicación ni crees una cuenta.</p>
     <ol class="pasos">
-      <li><strong>Abre los correos de Belenios.</strong> Llegan al correo registrado del propietario del departamento. Si el comité aprobó un poder de arrendatario a tiempo, llegan al correo que indicaron en esa autorización. Ahí vienen el acceso y los códigos para votar. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el de otro departamento.</li>
+      <li><strong>Abre los correos de Belenios.</strong> Se envían cuando la votación abre, al correo que quedó en la lista (por defecto el del propietario registrado; si hubo poder de arrendatario aprobado a tiempo, el que indicaron en esa autorización). Ahí vienen el acceso y los códigos. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el de otro departamento.</li>
       <li><strong>Aprieta «Ir a Belenios a votar» en el recuadro de esta página.</strong> Solo aparece cuando la votación está abierta. Se abre Belenios: esa es la página donde sí se vota. No marques nada en esta ficha.</li>
       <li><strong>Entra en Belenios</strong> con lo que te llegó al correo (enlace personal o códigos, según diga el mensaje).</li>
-      <li><strong>En Belenios, elige una opción.</strong> Son las mismas que leíste más arriba (Apruebo o Rechazo). Esa elección cuenta solo ahí.</li>
+      <li><strong>En Belenios, elige una opción.</strong> Son las mismas que leíste más arriba (Apruebo, Rechazo, Blanco o Nulo). Esa elección cuenta solo ahí.</li>
       <li><strong>Confirma el voto en Belenios</strong> cuando el sistema te lo pida (por ejemplo, con un código del correo).</li>
       <li><strong>Anota o fotografía el número de comprobante</strong> que aparece al final en Belenios, antes de cerrar. Con ese número se comprueba que el voto quedó guardado, sin mostrar lo que votaste.</li>
     </ol>
@@ -183,39 +183,39 @@
     <h2>Si algo no resulta</h2>
     <p class="ayuda">Abre cada pregunta para leer la respuesta.</p>
     <details><summary>¿Puedo votar desde esta página?</summary>
-      <p>No. Esta página solo informa. Aunque veas Apruebo o Rechazo más arriba, aquí no se registra ningún voto. Para votar tienes que apretar «Ir a Belenios a votar» y marcar la opción en Belenios.</p></details>
+      <p>No. Esta página solo informa. Aunque veas las opciones más arriba, aquí no se registra ningún voto. Para votar tienes que apretar «Ir a Belenios a votar» y marcar la opción en Belenios.</p></details>
     <details><summary>¿El comité o la administración pueden manipular el resultado?</summary>
       <p>No. El total se arma en Belenios a partir de los votos cifrados. Varios trustees tienen que participar para abrir ese total. Además, cualquiera puede revisar la urna pública y el resultado en Belenios. Los roles (administrador, credenciales y trustees) están publicados más arriba, en «Cómo se cuida que el proceso sea limpio».</p></details>
     {% if e.tipo_sesion == "reforzada" %}
     <details><summary>¿Qué pasa si soy arrendatario?</summary>
-      <p>Arrendar no alcanza para votar en esta consulta. Necesitas una autorización expresa del copropietario (poder simple, si así lo indica el reglamento del edificio). Sin eso, el acceso de Belenios queda para el propietario registrado.</p>
-      <p>Importante: cuando Belenios ya está abierta, <strong>no se puede agregar gente ni cambiar el correo</strong> de un departamento. Por eso el poder tiene que llegar antes de abrir los votos.</p>
+      <p>Arrendar no alcanza para votar en esta consulta. Necesitas una autorización expresa del copropietario (poder simple, si así lo indica el reglamento del edificio). Sin eso, el correo de Belenios queda para el propietario registrado.</p>
+      <p>Orden del proceso: primero se reciben y aprueban los poderes; el comité deja fijo el correo de cada departamento en la lista; <strong>recién al abrir</strong> Belenios envía los correos. Después de abierta <strong>no se puede</strong> agregar gente ni cambiar un correo.</p>
       <p>Plazos:</p>
       <ul>
         <li><strong>Recepción del poder:</strong> hasta el {% if e.plazo_poder %}{{ e.plazo_poder|fecha }}{% elif e.apertura %}{{ e.apertura|fecha }}{% else %}momento que fije el comité{% endif %}.</li>
-        <li><strong>Respuesta del comité:</strong> el comité confirma o rechaza{% if e.apertura %} a más tardar antes de la apertura ({{ e.apertura|fecha }}){% else %} antes de que se abran los votos{% endif %}, para alcanzar a actualizar la lista de Belenios.</li>
+        <li><strong>Respuesta del comité:</strong> confirma o rechaza{% if e.apertura %} a más tardar antes de la apertura ({{ e.apertura|fecha }}){% else %} antes de que se abran los votos{% endif %}, para dejar tu correo en la lista a tiempo.</li>
       </ul>
       <p>Puedes hacer esto:</p>
       <ol>
         <li><strong>Habla con tu copropietario</strong> y solicítale el poder simple para votar en esta consulta, por tu departamento.</li>
         <li><strong>El copropietario firma</strong> esa autorización a tu nombre y con el número de departamento.</li>
         <li><strong>Envíenla al comité</strong> dentro del plazo de recepción{% if cfg.contacto_email %}, a <a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% endif %}. Incluyan el correo donde debe llegar Belenios.</li>
-        <li><strong>Esperen la confirmación del comité</strong> dentro del plazo de respuesta. Recién ahí el acceso de Belenios puede quedar a tu nombre. Un departamento = un voto: no votan dueño y arrendatario a la vez.</li>
-        <li><strong>Cuando la votación esté abierta,</strong> votas en Belenios (no en esta página), con el acceso que llegó a ese correo.</li>
+        <li><strong>Esperen la confirmación del comité</strong> dentro del plazo de respuesta. Si aprueban, tu correo queda en la lista <em>antes</em> de la apertura. Un departamento = un voto: no votan dueño y arrendatario a la vez.</li>
+        <li><strong>Al abrir la votación,</strong> Belenios envía el acceso a ese correo. Ahí votas en Belenios (no en esta página).</li>
       </ol>
-      <p>Si el copropietario no autoriza, o el poder llega fuera de plazo, no puedes votar tú. El voto sigue siendo del propietario registrado.</p></details>
-    <details><summary>¿A quién le llega el correo de Belenios si el depto está arrendado?</summary>
-      <p>Por defecto, Belenios llega al <strong>correo registrado del propietario</strong> de esa unidad.</p>
-      <p>Si el propietario cede el voto al arrendatario y el comité lo aprueba a tiempo, Belenios se envía al correo del arrendatario que indiquen. <strong>No es el mismo enlace reenviado:</strong> el comité actualiza el correo en la lista y se genera un acceso para esa casilla. El propietario no debe usar un correo anterior si el voto quedó cedido; un departamento tiene un solo acceso válido.</p>
-      <p>Si ya te llegó el correo como propietario y después cedes el voto, avisa al comité de inmediato para actualizar la lista y reenviar el acceso al arrendatario.</p></details>
+      <p>Si el copropietario no autoriza, o el poder llega fuera de plazo, no puedes votar tú. El correo y el voto quedan para el propietario registrado.</p></details>
+    <details><summary>¿A quién le llega el correo de Belenios si el departamento está arrendado?</summary>
+      <p>Belenios envía los correos <strong>al momento de abrir</strong> la votación, y solo a quienes ya están en la lista. Esa lista no se puede cambiar después.</p>
+      <p>Por defecto, en la lista está el <strong>correo registrado del propietario</strong>. Si el propietario cede el voto al arrendatario y el comité aprueba el poder <strong>antes de la apertura</strong>, en la lista queda el correo del arrendatario y el acceso llega ahí. No es un reenvío del mail del dueño: es el correo que quedó cargado al abrir.</p>
+      <p>Si el poder no alcanzó a aprobarse antes de la apertura, el correo llega al propietario. Después ya no se puede cambiar.</p></details>
     {% endif %}
     <details><summary>¿Alguien puede ver lo que voté?</summary>
       <p>No. Ni el comité, ni la administración, ni esta página, ni ninguna persona puede ver tu voto. Al cerrar se publica cuántos votos tuvo cada opción, no el voto de cada departamento.</p>
       <p>Así funciona, en simple:</p>
       <ol>
-        <li>Eliges Apruebo o Rechazo en Belenios.</li>
+        <li>Eliges una opción en Belenios (Apruebo, Rechazo, Blanco o Nulo).</li>
         <li>En tu celular o computador, el voto se convierte en un código que nadie puede leer. Eso pasa antes de enviarlo.</li>
-        <li>A la urna llega solo ese código, no la palabra «Apruebo» o «Rechazo».</li>
+        <li>A la urna llega solo ese código, no el texto de la opción.</li>
         <li>Al cerrar, el sistema suma todos esos códigos y solo entonces abre el resultado total.</li>
         <li>Se publica cuántos votos hubo a favor y en contra. El voto de cada departamento no se abre.</li>
       </ol>
