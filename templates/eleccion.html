@@ -11,27 +11,30 @@
   <div class="ficha-grid">
   <aside class="ficha-lado">
   <div class="accion">
+    <p class="accion-aviso">En esta página no se vota. El voto se emite solo en Belenios.</p>
     <div data-mostrar="borrador" {% if e.estado != "borrador" %}hidden{% endif %}>
       <p><strong>Todavía no se puede votar.</strong></p>
-      <p>El botón «Ir a votar» aparece en este recuadro cuando la votación se abre.</p>
+      <p>Cuando se abra, aquí aparecerá el botón «Ir a Belenios a votar». Esa es la única forma de emitir el voto.</p>
     </div>
     <div data-mostrar="proxima" {% if e.estado != "proxima" %}hidden{% endif %}>
       <p class="cuenta">La votación abre en <strong data-cuenta="apertura">…</strong></p>
+      <p>Cuando abra, usa el botón de este recuadro para ir a Belenios. Aquí no se marca ninguna opción.</p>
     </div>
     <div data-mostrar="abierta" {% if e.estado != "abierta" %}hidden{% endif %}>
       {% if e.url_belenios %}
-        <a class="boton" href="{{ e.url_belenios }}" rel="noopener">Ir a votar</a>
+        <a class="boton" href="{{ e.url_belenios }}" rel="noopener">Ir a Belenios a votar</a>
+        <p>Se abre la página de Belenios. Ahí sí marcas tu opción. Aquí solo lees la información.</p>
       {% else %}
-        <p class="aviso">El enlace para votar se publicará pronto.</p>
+        <p class="aviso">El enlace a Belenios se publicará pronto. Mientras tanto, en esta página no se puede votar.</p>
       {% endif %}
       <p class="cuenta">Cierra en <strong data-cuenta="cierre">…</strong></p>
     </div>
     <div data-mostrar="cerrada" {% if e.estado != "cerrada" %}hidden{% endif %}>
       <p><strong>Votación cerrada.</strong></p>
       {% if e.url_resultados %}
-        <a class="boton secundario" href="{{ e.url_resultados }}" rel="noopener">Ver los resultados</a>
+        <a class="boton secundario" href="{{ e.url_resultados }}" rel="noopener">Ver los resultados en Belenios</a>
       {% else %}
-        <p class="tenue">Los resultados se publicarán aquí.</p>
+        <p class="tenue">Los resultados se publicarán aquí, con enlace a Belenios.</p>
       {% endif %}
     </div>
   </div>
@@ -47,10 +50,13 @@
 
   <div class="ficha-principal">
   <section>
-    <h2>La pregunta</h2>
+    <h2>De qué se vota</h2>
+    <p class="nota-novoto"><strong>Aquí no se vota.</strong> Esto es solo para que leas la pregunta. Para votar tienes que ir a Belenios, con el botón del recuadro de estado.</p>
     {% for p in e.preguntas %}
-    <div class="pregunta">
+    <div class="pregunta" aria-label="Pregunta de solo lectura. No se vota aquí.">
+      <p class="pregunta-etiqueta">Pregunta (solo lectura)</p>
       <h3>{{ p.pregunta }}</h3>
+      <p class="pregunta-etiqueta">Opciones que verás en Belenios</p>
       <ul>{% for o in p.opciones %}<li>{{ o }}</li>{% endfor %}</ul>
     </div>
     {% endfor %}
@@ -63,7 +69,7 @@
       <p>Vota si está al día en todo lo que debe al edificio. Los gastos comunes forman parte de esa deuda. También vota quien tiene un convenio de pago con la administración y lo está cumpliendo. Si tiene más de un departamento, tiene que estar al día en todos.</p>
       <h3>Arrendatario</h3>
       {% if e.tipo_sesion == "reforzada" %}
-      <p>No vota solo por arrendar. En esta votación puede hacerlo únicamente con una autorización expresa del copropietario.</p>
+      <p>No vota solo por arrendar. En esta votación puede hacerlo únicamente con una autorización expresa del copropietario. El paso a paso está en «¿Qué pasa si soy arrendatario?», más abajo.</p>
       {% else %}
       <p>Puede votar por el copropietario si este no vota y no designa a otra persona, salvo que el copropietario haya avisado al comité y al administrador que no lo autoriza.</p>
       {% endif %}
@@ -107,9 +113,10 @@
   <section>
     <h2>Lo que rige esta votación</h2>
     <ul class="reglas">
-      <li>{% if e.modalidad == "Consulta por escrito" %}No hay que ir a una reunión. Cada departamento vota por internet, en el plazo que se publique en esta página.{% elif e.modalidad %}La forma de votar es: {{ e.modalidad }}.{% else %}Cada departamento vota por internet, en el plazo que se publique en esta página.{% endif %}</li>
+      <li>{% if e.modalidad == "Consulta por escrito" %}No hay que ir a una reunión. Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% elif e.modalidad %}La forma de votar es: {{ e.modalidad }}. El voto se emite en Belenios, no en esta página.{% else %}Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% endif %}</li>
       <li>{% if e.ponderada %}Cada departamento pesa según su porcentaje en el reglamento.{% else %}Cada departamento tiene un voto, del mismo valor.{% endif %}</li>
-      <li>Hay que elegir una opción. No se puede dejar en blanco.</li>
+      <li>En Belenios hay que elegir una opción. No se puede dejar en blanco.</li>
+      <li>Esta página solo informa. Tocando Apruebo o Rechazo aquí no pasa nada: no son botones de voto.</li>
     </ul>
   </section>
 
@@ -127,28 +134,52 @@
 
   <section>
     <h2>Cómo votar, en este orden</h2>
-    <p>Sigue los pasos del 1 al 6, en ese orden. Puedes usar el celular o el computador. No instales una aplicación ni crees una cuenta: se abre en el navegador, como esta página.</p>
+    <p>El voto se emite <strong>solo en Belenios</strong>. Esta página te explica y te lleva hasta ahí. Sigue los pasos del 1 al 6. Puedes usar el celular o el computador. No instales una aplicación ni crees una cuenta.</p>
     <ol class="pasos">
-      <li><strong>Abre los dos correos de Belenios.</strong> Llegan al correo del departamento y pueden venir en cualquier orden. Uno trae un código largo. El otro trae una contraseña. Fíjate en el texto de cada correo, no en cuál llegó primero. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el código de otro departamento.</li>
-      <li><strong>Aprieta «Ir a votar» en esta página.</strong> El botón está en el recuadro que dice si ya se puede votar, y solo aparece cuando la votación está abierta. Desde ahí se abre la página donde se emite el voto.</li>
-      <li><strong>Pega el código largo</strong> en el recuadro que lo pide. En el celular: mantén el dedo sobre el código, elige Copiar; después mantén el dedo en el recuadro y elige Pegar. En el computador: selecciona el código y pégalo con Ctrl+V. En Mac, con Command+V. En este paso no escribas la contraseña.</li>
-      <li><strong>Elige una opción.</strong> Son las mismas de «La pregunta», más arriba. Después sigue al paso siguiente de esa página.</li>
-      <li><strong>Escribe la contraseña</strong> del otro correo, no el código, y confirma el voto.</li>
-      <li><strong>Anota o fotografía el número de comprobante</strong> que aparece al final, antes de cerrar esa página. Con ese número se comprueba que el voto quedó guardado, sin mostrar lo que votaste.</li>
+      <li><strong>Abre los correos de Belenios.</strong> Llegan al correo del departamento. Ahí vienen el acceso y los códigos para votar. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el de otro departamento.</li>
+      <li><strong>Aprieta «Ir a Belenios a votar» en el recuadro de esta página.</strong> Solo aparece cuando la votación está abierta. Se abre Belenios: esa es la página donde sí se vota. No marques nada en esta ficha.</li>
+      <li><strong>Entra en Belenios</strong> con lo que te llegó al correo (enlace personal o códigos, según diga el mensaje).</li>
+      <li><strong>En Belenios, elige una opción.</strong> Son las mismas que leíste más arriba (Apruebo o Rechazo). Esa elección cuenta solo ahí.</li>
+      <li><strong>Confirma el voto en Belenios</strong> cuando el sistema te lo pida (por ejemplo, con un código del correo).</li>
+      <li><strong>Anota o fotografía el número de comprobante</strong> que aparece al final en Belenios, antes de cerrar. Con ese número se comprueba que el voto quedó guardado, sin mostrar lo que votaste.</li>
     </ol>
   </section>
 
   <section>
     <h2>Si algo no resulta</h2>
     <p class="ayuda">Abre cada pregunta para leer la respuesta.</p>
+    <details><summary>¿Puedo votar desde esta página?</summary>
+      <p>No. Esta página solo informa. Aunque veas Apruebo y Rechazo más arriba, aquí no se registra ningún voto. Para votar tienes que apretar «Ir a Belenios a votar» y marcar la opción en Belenios.</p></details>
+    {% if e.tipo_sesion == "reforzada" %}
+    <details><summary>¿Qué pasa si soy arrendatario?</summary>
+      <p>Arrendar no alcanza para votar en esta consulta. Necesitas una autorización expresa del copropietario (poder simple, si así lo indica el reglamento del edificio). Sin eso, el acceso de Belenios queda para el copropietario al día.</p>
+      <p>Puedes hacer esto:</p>
+      <ol>
+        <li><strong>Habla con tu copropietario</strong> y solicítale el poder simple para votar en esta consulta, por tu departamento.</li>
+        <li><strong>El copropietario firma</strong> esa autorización a tu nombre y con el número de departamento.</li>
+        <li><strong>Envíenla al comité</strong>{% if e.apertura %} antes del {{ e.apertura|fecha }}{% else %} antes de que se abran los votos{% endif %}{% if cfg.contacto_email %}, a <a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% endif %}. Incluyan el correo donde debe llegar Belenios.</li>
+        <li><strong>Esperen la confirmación del comité.</strong> Recién ahí el acceso de Belenios puede quedar a tu nombre. Un departamento = un voto: no votan dueño y arrendatario a la vez.</li>
+        <li><strong>Cuando la votación esté abierta,</strong> votas en Belenios (no en esta página), con el acceso que llegó a ese correo.</li>
+      </ol>
+      <p>Si el copropietario no autoriza, no puedes votar tú. El voto sigue siendo del copropietario hábil.</p></details>
+    {% endif %}
     <details><summary>¿Alguien puede ver lo que voté?</summary>
-      <p>No. Ni el comité, ni la administración, ni esta página, ni ninguna persona puede ver tu voto. Al cerrar se publica cuántos votos tuvo cada opción, no el voto de cada departamento.</p></details>
+      <p>No. Ni el comité, ni la administración, ni esta página, ni ninguna persona puede ver tu voto. Al cerrar se publica cuántos votos tuvo cada opción, no el voto de cada departamento.</p>
+      <p>Así funciona, en simple:</p>
+      <ol>
+        <li>Eliges Apruebo o Rechazo en Belenios.</li>
+        <li>En tu celular o computador, el voto se convierte en un código que nadie puede leer. Eso pasa antes de enviarlo.</li>
+        <li>A la urna llega solo ese código, no la palabra «Apruebo» o «Rechazo».</li>
+        <li>Al cerrar, el sistema suma todos esos códigos y solo entonces abre el resultado total.</li>
+        <li>Se publica cuántos votos hubo a favor y en contra. El voto de cada departamento no se abre.</li>
+      </ol>
+      <p>Con el número de comprobante puedes comprobar que tu voto quedó guardado, sin que nadie vea lo que elegiste. Este sitio no recibe votos: solo informa. Si quieres el detalle técnico, está en <a href="https://www.belenios.org/howitworks.html" rel="noopener">cómo funciona Belenios</a>.</p></details>
     <details><summary>¿Puedo cambiar lo que voté?</summary>
-      <p>Sí, mientras la votación siga abierta. Entra otra vez con el mismo código y la misma contraseña, y elige la opción correcta. Solo cuenta el último envío. Cuando cierra, ya no se puede cambiar.</p></details>
+      <p>Sí, mientras la votación siga abierta. Vuelve a entrar a Belenios con tus datos y elige la opción correcta. Solo cuenta el último envío. Cuando cierra, ya no se puede cambiar.</p></details>
     <details><summary>¿Qué hago si no encuentro los correos?</summary>
-      <p>Revisa el spam y espera un rato: son dos correos, no uno. Si no aparecen, escribe a {% if cfg.contacto_email %}<a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% else %}el comité{% endif %} con tu número de departamento. No pidas el código de otro departamento.</p></details>
+      <p>Revisa el spam y espera un rato. Si no aparecen, escribe a {% if cfg.contacto_email %}<a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% else %}el comité{% endif %} con tu número de departamento. No pidas el acceso de otro departamento.</p></details>
     <details><summary>¿Puedo votar en el celular de otra persona?</summary>
-      <p>Sí. Usa el código y la contraseña de tu departamento. Al terminar, no dejes el código ni la contraseña guardados en ese celular. Si abriste tu correo ahí, cierra la sesión antes de devolverlo.</p></details>
+      <p>Sí, pero el voto se hace en Belenios, no en esta página. Usa el acceso de tu departamento. Al terminar, no dejes códigos ni el correo abierto en ese celular. Si abriste tu correo ahí, cierra la sesión antes de devolverlo.</p></details>
     <details><summary>¿Qué pasa si perdí el número de comprobante?</summary>
       <p>El voto sigue guardado y se cuenta igual. Ese número no se puede enviar de nuevo, porque no queda asociado a tu nombre.</p></details>
   </section>
