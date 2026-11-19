@@ -1,0 +1,12 @@
+# Datos públicos de la comunidad. Sin RUT, nombres ni correos de copropietarios.
+comunidad: "Comunidad Suárez Mujica 411"
+direccion: "Suárez Mujica 411, Ñuñoa"
+contacto_email: ""
+# URL del sitio en GitHub Pages (sin / final).
+url_base: "https://miguelcarcamov.github.io/suarezmujica411"
+zona_horaria: "America/Santiago"
+# Unidades con derecho a voto. Vacío hasta confirmar el número con el comité:
+# así el sitio muestra el 66 % y no un conteo que podría estar mal.
+total_unidades:
+# Color principal del sitio (hex)
+color: "#1f5f8b"

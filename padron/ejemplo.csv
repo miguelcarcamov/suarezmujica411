@@ -1,0 +1,5 @@
+depto,nombre,rut,email,habilitado
+101,Unidad ejemplo 101,11.111.111-1,unidad101@ejemplo.cl,si
+102,Unidad ejemplo 102,12.345.678-5,unidad102@ejemplo.cl,si
+201,Unidad ejemplo 201,9.876.543-3,unidad201@ejemplo.cl,si
+202,Unidad ejemplo 202,7.654.321-6,unidad202@ejemplo.cl,no

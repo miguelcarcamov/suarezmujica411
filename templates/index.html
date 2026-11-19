@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}Votaciones{% endblock %}
+{% block contenido %}
+<section class="intro">
+  <h1>Votaciones</h1>
+  <p>Aquí encuentras las consultas de la comunidad, sus antecedentes y el enlace para votar.</p>
+</section>
+
+{% if not elecciones %}
+  <p class="vacio">No hay votaciones publicadas.</p>
+{% endif %}
+
+<div class="lista">
+{% for e in elecciones %}
+  <a class="tarjeta" href="v/{{ e.slug }}/index.html"
+     {% if e.borrador %}data-borrador="1"{% elif e.apertura %}data-apertura="{{ e.apertura|iso }}" data-cierre="{{ e.cierre|iso }}"{% endif %}>
+    <span class="estado estado-{{ e.estado }}" data-estado>{% if e.estado == "borrador" %}En preparación{% endif %}</span>
+    <h2>{{ e.titulo }}</h2>
+    {% if e.resumen %}<p>{{ e.resumen }}</p>{% endif %}
+    {% if e.apertura and e.cierre %}
+      <p class="fechas">Del {{ e.apertura|fecha }} al {{ e.cierre|fecha }}</p>
+    {% else %}
+      <p class="fechas">Fechas por confirmar</p>
+    {% endif %}
+  </a>
+{% endfor %}
+</div>
+{% endblock %}

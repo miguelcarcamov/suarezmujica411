@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------
+# PLANTILLA DE VOTACIÓN. No se publica: build.py solo lee elecciones/.
+# Para una nueva: copia este archivo a elecciones/AAAA-MM-tema.yaml
+# y edita los campos. Pon borrador: false solo cuando fechas,
+# antecedentes y el enlace de Belenios estén listos.
+# ---------------------------------------------------------------
+titulo: "Pintura de fachada 2027"
+# Breve, aparece en la portada
+resumen: "Elegir el presupuesto para pintar la fachada del edificio."
+borrador: false
+
+# Fechas en hora de Chile, formato AAAA-MM-DD HH:MM
+sesion_informativa: "2026-12-01 19:30"   # opcional (obligatoria en consultas por escrito)
+apertura: "2026-12-05 09:00"
+cierre:   "2026-12-12 21:00"
+
+# Modalidad: "Consulta por escrito", "Asamblea virtual", etc.
+modalidad: "Consulta por escrito"
+# Tipo de sesión según la materia (art. 15, Ley 21.442):
+#   ordinaria  -> constituye 33 %; aprueba mayoría de quienes participan
+#   absoluta   -> constituye y aprueba > 50 % de los derechos
+#   reforzada  -> constituye y aprueba >= 66 % de los derechos
+tipo_sesion: absoluta
+ponderada: false         # false = un voto por depto; true = ponderado por prorrateo
+
+# Enlaces de Belenios (se rellenan al crear la elección allá)
+url_belenios: ""          # enlace a la elección
+url_resultados: ""        # enlace a resultados verificables (al cerrar)
+
+# Texto con antecedentes. Admite Markdown.
+antecedentes: |
+  El comité cotizó con tres empresas. Las tres incluyen andamios,
+  limpieza y garantía de 3 años. El monto se paga con el fondo de reserva.
+
+documentos:
+  - nombre: "Cotización A (PDF)"
+    url: "https://ejemplo.cl/cotizacion-a.pdf"
+  - nombre: "Acta sesión informativa"
+    url: ""
+
+# Lo que todavía falta. Se muestra en la ficha y se borra al completarlo.
+pendientes: []
+
+preguntas:
+  - pregunta: "¿Qué presupuesto aprueba?"
+    opciones:
+      - "Empresa A — $18.500.000"
+      - "Empresa B — $21.000.000"
+      - "Empresa C — $19.900.000"

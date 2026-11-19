@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Votaciones{% endblock %} · {{ cfg.comunidad }}</title>
+  <link rel="stylesheet" href="{{ raiz }}/static/style.css">
+  <style>:root { --primario: {{ cfg.color or "#1f5f8b" }}; }</style>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor">
+      <a class="marca" href="{{ raiz }}/index.html">
+        <span class="marca-icono" aria-hidden="true">🗳️</span>
+        <span>
+          <strong>{{ cfg.comunidad }}</strong>
+          <small>Votaciones de la comunidad</small>
+        </span>
+      </a>
+    </div>
+  </header>
+  <main class="contenedor">
+    {% block contenido %}{% endblock %}
+  </main>
+  <footer class="pie">
+    <div class="contenedor">
+      <p>{{ cfg.direccion }}{% if cfg.contacto_email %} · Dudas: <a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% endif %}</p>
+      <p class="tenue">El voto se emite en <a href="https://www.belenios.org" rel="noopener">Belenios</a>, un sistema de voto electrónico verificable y secreto de Inria/CNRS. Este sitio solo informa.</p>
+    </div>
+  </footer>
+  <script src="{{ raiz }}/static/estado.js"></script>
+</body>
+</html>

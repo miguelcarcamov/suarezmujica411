@@ -1,0 +1,18 @@
+# Sitio generado
+_site/
+
+# Padrón real (RUT, nombres y correos). Nunca se versiona.
+# Se conserva solo el CSV de ejemplo, con datos ficticios.
+padron/*
+!padron/ejemplo.csv
+
+# Entorno local y secretos
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+
+# Editor
+.cursor/
+.claude/

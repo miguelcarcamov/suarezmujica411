@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block titulo %}{{ e.titulo }}{% endblock %}
+{% block contenido %}
+<article class="eleccion" {% if e.borrador %}data-borrador="1"{% elif e.apertura %}data-apertura="{{ e.apertura|iso }}" data-cierre="{{ e.cierre|iso }}"{% endif %}>
+  <a class="volver" href="{{ raiz }}/index.html">← Todas las votaciones</a>
+  <span class="estado estado-{{ e.estado }}" data-estado>{% if e.estado == "borrador" %}En preparación{% endif %}</span>
+  <h1>{{ e.titulo }}</h1>
+  {% if e.resumen %}<p class="resumen">{{ e.resumen }}</p>{% endif %}
+
+  <div class="accion">
+    <div data-mostrar="borrador" {% if e.estado != "borrador" %}hidden{% endif %}>
+      <p><strong>Ficha en preparación.</strong> Todavía no hay enlace para votar.</p>
+      <p class="tenue">Se publica cuando estén las fechas, los antecedentes y la elección en Belenios.</p>
+    </div>
+    <div data-mostrar="proxima" {% if e.estado != "proxima" %}hidden{% endif %}>
+      <p class="cuenta">La votación abre en <strong data-cuenta="apertura">…</strong></p>
+    </div>
+    <div data-mostrar="abierta" {% if e.estado != "abierta" %}hidden{% endif %}>
+      {% if e.url_belenios %}
+        <a class="boton" href="{{ e.url_belenios }}" rel="noopener">Ir a votar</a>
+      {% else %}
+        <p class="aviso">El enlace para votar se publicará pronto.</p>
+      {% endif %}
+      <p class="cuenta">Cierra en <strong data-cuenta="cierre">…</strong></p>
+    </div>
+    <div data-mostrar="cerrada" {% if e.estado != "cerrada" %}hidden{% endif %}>
+      <p><strong>Votación cerrada.</strong></p>
+      {% if e.url_resultados %}
+        <a class="boton secundario" href="{{ e.url_resultados }}" rel="noopener">Ver resultados verificables</a>
+      {% else %}
+        <p class="tenue">Los resultados se publicarán aquí.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if e.pendientes %}
+  <section class="pendientes">
+    <h2>Falta publicar antes de abrir</h2>
+    <ul>
+      {% for p in e.pendientes %}<li>{{ p }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <dl class="datos">
+    {% if e.sesion_informativa %}<div><dt>Sesión informativa</dt><dd>{{ e.sesion_informativa|fecha }}</dd></div>{% endif %}
+    <div><dt>Apertura</dt><dd>{% if e.apertura %}{{ e.apertura|fecha }}{% else %}Por confirmar{% endif %}</dd></div>
+    <div><dt>Cierre</dt><dd>{% if e.cierre %}{{ e.cierre|fecha }}{% else %}Por confirmar{% endif %}</dd></div>
+    {% if e.modalidad %}<div><dt>Modalidad</dt><dd>{{ e.modalidad }}</dd></div>{% endif %}
+    <div><dt>Cómputo</dt><dd>{{ "Ponderado por prorrateo" if e.ponderada else "Un voto por unidad" }}</dd></div>
+  </dl>
+
+  <section class="quorum">
+    <h2>Qué se necesita para aprobar</h2>
+    <p class="tenue">Tipo de sesión: <strong>{{ e.tipo_nombre }}</strong> (art. 15, Ley 21.442)</p>
+    <div class="quorum-grid">
+      <div>
+        <span class="q-num">{% if e.num_constituir %}{{ e.num_constituir }}<small> de {{ e.total_unidades }}</small>{% elif e.tipo_sesion == "reforzada" %}66 %{% elif e.tipo_sesion == "absoluta" %}&gt; 50 %{% else %}33 %{% endif %}</span>
+        <span class="q-txt">{{ e.req_constituir }}{% if e.num_constituir %} (deptos que votan){% endif %}</span>
+      </div>
+      <div>
+        <span class="q-num">{% if e.num_aprobar %}{{ e.num_aprobar }}<small> de {{ e.total_unidades }}</small>{% elif e.tipo_sesion == "reforzada" %}66 %{% elif e.tipo_sesion == "absoluta" %}&gt; 50 %{% else %}②{% endif %}</span>
+        <span class="q-txt">{{ e.req_aprobar }}{% if e.num_aprobar %} (votos a favor){% endif %}</span>
+      </div>
+    </div>
+    <p class="tenue">Si no se alcanza la participación mínima, no hay acuerdo aunque gane una opción. ¡Tu voto cuenta para el quórum!</p>
+  </section>
+
+  {% if e.antecedentes_html %}
+  <section>
+    <h2>Antecedentes</h2>
+    {{ e.antecedentes_html|safe }}
+    {% if e.documentos %}
+    <ul class="documentos">
+      {% for d in e.documentos %}<li><a href="{{ d.url }}" rel="noopener">📄 {{ d.nombre }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <section>
+    <h2>Qué se vota</h2>
+    {% for p in e.preguntas %}
+    <div class="pregunta">
+      <h3>{{ p.pregunta }}</h3>
+      <ul>{% for o in p.opciones %}<li>{{ o }}</li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section>
+    <h2>Cómo votar</h2>
+    <ol class="pasos">
+      <li><strong>Revisa tu correo.</strong> Te llegarán dos mensajes de <em>Belenios</em>: uno con tu <em>credencial</em> y otro con tu <em>contraseña</em>. Revisa también spam.</li>
+      <li><strong>Pulsa “Ir a votar”</strong> en esta página cuando la votación esté abierta.</li>
+      <li><strong>Pega tu credencial</strong>, marca tu opción y confirma.</li>
+      <li><strong>Ingresa tu contraseña</strong> para emitir el voto. Guarda el <em>número de seguimiento</em> que aparece al final.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Preguntas frecuentes</h2>
+    <details><summary>¿Alguien puede saber qué voté?</summary>
+      <p>No. Tu voto se cifra en tu propio dispositivo antes de enviarse. Ni el comité ni la administración ni el servidor pueden ver votos individuales; solo se descifra el total.</p></details>
+    <details><summary>¿Cómo sé que mi voto se contó?</summary>
+      <p>Con tu número de seguimiento puedes comprobar en la urna pública de Belenios que tu voto está registrado. Cualquiera puede recontar el resultado.</p></details>
+    <details><summary>¿Puedo cambiar mi voto?</summary>
+      <p>Sí, mientras la votación esté abierta puedes votar de nuevo. Solo se cuenta el último.</p></details>
+    <details><summary>No me llegó el correo</summary>
+      <p>Escribe a {% if cfg.contacto_email %}<a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% else %}el comité{% endif %} indicando tu número de departamento.</p></details>
+    <details><summary>¿Quién puede votar?</summary>
+      <p>Un voto por unidad, emitido por el propietario registrado o por quien tenga poder vigente, según el padrón verificado por el comité.</p></details>
+  </section>
+</article>
+{% endblock %}
