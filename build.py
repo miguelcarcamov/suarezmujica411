@@ -60,6 +60,35 @@ def cargar_eleccion(ruta, tz, cfg):
     d["antecedentes_html"] = markdown.markdown(d.get("antecedentes") or "")
     d["documentos"] = [doc for doc in d.get("documentos") or [] if doc.get("url")]
     d["pendientes"] = [str(p).strip() for p in (d.get("pendientes") or []) if str(p).strip()]
+    roles = d.get("roles") or {}
+    admin = roles.get("administrador") or {}
+    cred = roles.get("credenciales") or {}
+    trustees = []
+    for t in roles.get("trustees") or []:
+        if isinstance(t, dict):
+            trustees.append({
+                "nombre": (t.get("nombre") or "").strip(),
+                "detalle": (t.get("detalle") or "").strip(),
+            })
+    d["roles"] = {
+        "administrador": {
+            "nombre": (admin.get("nombre") or "").strip(),
+            "detalle": (admin.get("detalle") or "").strip(),
+        },
+        "credenciales": {
+            "nombre": (cred.get("nombre") or "").strip(),
+            "detalle": (cred.get("detalle") or "").strip(),
+        },
+        "trustees": trustees,
+        "trustees_umbral": int(roles["trustees_umbral"]) if roles.get("trustees_umbral") else (
+            max(1, (len(trustees) + 1) // 2) if trustees else 0
+        ),
+    }
+    d["roles_publicados"] = bool(
+        d["roles"]["administrador"]["nombre"]
+        or d["roles"]["credenciales"]["nombre"]
+        or any(t["nombre"] for t in d["roles"]["trustees"])
+    )
     if d["borrador"]:
         d["estado"] = "borrador"
     else:

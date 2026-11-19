@@ -119,6 +119,41 @@
     </ul>
   </section>
 
+  <section class="confianza">
+    <h2>Cómo se cuida que el proceso sea limpio</h2>
+    <p>El voto se cifra en tu celular o computador antes de enviarse. El voto de cada departamento no se abre: al final solo se publica el total. Con el número de comprobante puedes ver que tu voto quedó en la urna de Belenios, sin mostrar lo que elegiste.</p>
+    <p>Para que una sola persona no controle todo, Belenios reparte tres roles. Tienen que ser personas distintas:</p>
+    <div class="roles">
+      <article>
+        <h3>Administrador</h3>
+        <p class="rol-nombre">{% if e.roles.administrador.nombre %}{{ e.roles.administrador.nombre }}{% else %}Por confirmar{% endif %}</p>
+        <p>{% if e.roles.administrador.detalle %}{{ e.roles.administrador.detalle }}{% else %}Arma la elección (pregunta, fechas, lista). No debería ser quien solo genera las credenciales ni quien solo abre el resultado.{% endif %}</p>
+      </article>
+      <article>
+        <h3>Credenciales</h3>
+        <p class="rol-nombre">{% if e.roles.credenciales.nombre %}{{ e.roles.credenciales.nombre }}{% else %}Por confirmar{% endif %}</p>
+        <p>{% if e.roles.credenciales.detalle %}{{ e.roles.credenciales.detalle }}{% else %}Genera y envía los accesos de voto. Debe ser otra persona, no el administrador.{% endif %}</p>
+      </article>
+      <article>
+        <h3>Trustees (llave del resultado)</h3>
+        <p class="rol-nombre">{% if e.roles.trustees_umbral and e.roles.trustees %}{{ e.roles.trustees_umbral }} de {{ e.roles.trustees|length }} para descifrar{% else %}Varias personas{% endif %}</p>
+        <p>Varias personas guardan cada una una parte de la llave. Hace falta más de una para abrir el total. Nadie abre el voto de un departamento.</p>
+        {% if e.roles.trustees %}
+        <ul class="trustee-lista">
+          {% for t in e.roles.trustees %}
+          <li><strong>{% if t.nombre %}{{ t.nombre }}{% else %}Por confirmar{% endif %}</strong>{% if t.detalle %} — {{ t.detalle }}{% endif %}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </article>
+    </div>
+    <ul class="reglas">
+      <li>Cuando la votación abre, la lista de correos en Belenios ya no se puede cambiar.</li>
+      <li>Al cerrar, el resultado se publica en Belenios. Este sitio solo enlaza; no cuenta votos.</li>
+      <li>Cualquier vecino puede revisar la urna pública y el total en Belenios.</li>
+    </ul>
+  </section>
+
   {% if e.antecedentes_html %}
   <section>
     <h2>Antecedentes</h2>
@@ -148,7 +183,9 @@
     <h2>Si algo no resulta</h2>
     <p class="ayuda">Abre cada pregunta para leer la respuesta.</p>
     <details><summary>¿Puedo votar desde esta página?</summary>
-      <p>No. Esta página solo informa. Aunque veas Apruebo y Rechazo más arriba, aquí no se registra ningún voto. Para votar tienes que apretar «Ir a Belenios a votar» y marcar la opción en Belenios.</p></details>
+      <p>No. Esta página solo informa. Aunque veas Apruebo o Rechazo más arriba, aquí no se registra ningún voto. Para votar tienes que apretar «Ir a Belenios a votar» y marcar la opción en Belenios.</p></details>
+    <details><summary>¿El comité o la administración pueden manipular el resultado?</summary>
+      <p>No. El total se arma en Belenios a partir de los votos cifrados. Varios trustees tienen que participar para abrir ese total. Además, cualquiera puede revisar la urna pública y el resultado en Belenios. Los roles (administrador, credenciales y trustees) están publicados más arriba, en «Cómo se cuida que el proceso sea limpio».</p></details>
     {% if e.tipo_sesion == "reforzada" %}
     <details><summary>¿Qué pasa si soy arrendatario?</summary>
       <p>Arrendar no alcanza para votar en esta consulta. Necesitas una autorización expresa del copropietario (poder simple, si así lo indica el reglamento del edificio). Sin eso, el acceso de Belenios queda para el propietario registrado.</p>

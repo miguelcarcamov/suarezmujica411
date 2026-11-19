@@ -232,6 +232,42 @@ section p { max-width: 42em; }
 .quien p { margin: .35rem 0 0; }
 .reglas { margin: 0 0 1rem; padding-left: 1.2rem; max-width: 40em; }
 .reglas li { margin: 0 0 .75rem; }
+.confianza p { max-width: 42em; }
+.roles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 0 0 1rem;
+}
+.roles article {
+  background: var(--tarjeta);
+  border: 1px solid var(--linea);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--sombra);
+}
+.roles h3 {
+  margin: 0 0 8px;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--tenue);
+}
+.rol-nombre {
+  margin: 0 0 8px !important;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--tinta);
+}
+.roles article p { margin: 0; color: var(--tenue); font-size: .95rem; }
+.trustee-lista {
+  margin: 12px 0 0;
+  padding-left: 1.1rem;
+  color: var(--tinta);
+  font-size: .95rem;
+}
+.trustee-lista li { margin: 0 0 .4rem; }
 .comite { margin-top: 1.5rem; }
 .pasos { list-style: none; padding: 0; margin: 0; counter-reset: paso; }
 .pasos li {

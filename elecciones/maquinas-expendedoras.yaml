@@ -19,12 +19,32 @@ ponderada: false
 url_belenios: ""
 url_resultados: ""
 
+# Roles de Belenios: personas distintas. Completar nombres antes de abrir.
+# trustees_umbral: cuántos trustees hacen falta para descifrar el total (ej. 2 de 3).
+roles:
+  administrador:
+    nombre: "Miguel Cárcamo"
+    detalle: "Miembro del comité. Arma la elección en Belenios; no genera solo las credenciales ni descifra solo el resultado."
+  credenciales:
+    nombre: ""
+    detalle: "Otra persona del comité (no el administrador). Genera y envía los accesos de voto."
+  trustees:
+    - nombre: ""
+      detalle: "Vecino o integrante del comité. Guarda una parte de la llave del resultado."
+    - nombre: ""
+      detalle: "Vecino o integrante del comité. Guarda una parte de la llave del resultado."
+    - nombre: ""
+      detalle: "Vecino de confianza (idealmente fuera del comité). Guarda una parte de la llave del resultado."
+  trustees_umbral: 2
+
 # Antecedentes de la propuesta (lugar, plazo, convenio). Vacío hasta que existan:
 # el quórum y la ley ya se explican una sola vez en la ficha.
 
 pendientes:
   - "Número de departamentos con derecho a voto"
   - "Enlace de Belenios (url_belenios) antes de la apertura"
+  - "Nombre de quien lleva las credenciales (rol Belenios)"
+  - "Nombres de los 3 trustees (descifrado del resultado)"
   - "Lugar exacto donde irían las máquinas"
   - "Plazo del convenio y cómo se puede terminar"
   - "Cómo se calcula el ingreso y a qué fondo entra"
