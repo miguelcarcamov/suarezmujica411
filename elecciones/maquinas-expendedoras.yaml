@@ -1,7 +1,7 @@
 # Consulta en preparación. Mientras borrador sea true no se exigen fechas
 # y el sitio no ofrece el botón de votar.
-titulo: "Máquinas expendedoras Coca-Cola y Nescafé"
-resumen: "Consulta para aprobar o rechazar la instalación de máquinas expendedoras de Coca-Cola y Nescafé, cuyo ingreso sería un recurso de la comunidad."
+titulo: "Máquinas expendedoras (Amawa, Nescafé y Coca-Cola)"
+resumen: "Si se instalan máquinas expendedoras (Amawa, Nescafé y Coca-Cola) en espacios comunes, y ese ingreso queda para la comunidad."
 borrador: true
 
 # Fechas en hora de Chile, formato AAAA-MM-DD HH:MM. Completar antes de abrir.
@@ -19,33 +19,20 @@ ponderada: false
 url_belenios: ""
 url_resultados: ""
 
-antecedentes: |
-  La comunidad consultará si aprueba instalar, en espacios comunes, máquinas
-  expendedoras de Coca-Cola y de Nescafé. El ingreso que generen sería un
-  recurso de la comunidad.
-
-  El voto es uno por departamento, porque todas las unidades tienen el mismo
-  peso. La materia se vota con mayoría reforzada (art. 15, Ley 21.442): para
-  constituir la consulta y para aprobar hace falta al menos el 66 % de las
-  unidades. Quien no vota no suma a ese 66 %. Solo votan las unidades hábiles
-  del padrón que verifique el comité.
-
-  El voto no se emite en este sitio. Cada persona vota en Belenios: el voto se
-  cifra en su propio dispositivo, la urna es pública y cualquiera puede
-  recontar el resultado. El padrón, con RUT y correos, no se publica.
+# Antecedentes de la propuesta (lugar, plazo, convenio). Vacío hasta que existan:
+# el quórum y la ley ya se explican una sola vez en la ficha.
 
 pendientes:
-  - "Correo de contacto del comité"
   - "Número de departamentos con derecho a voto"
   - "Fecha de la sesión informativa, de la apertura y del cierre"
   - "Lugar exacto donde irían las máquinas"
   - "Plazo del convenio y cómo se puede terminar"
   - "Cómo se calcula el ingreso y a qué fondo entra"
-  - "Quién opera, reponen y responde por mantención y energía"
+  - "Quién las opera, las reponen y paga la energía"
   - "Propuesta o contrato, con enlace de descarga"
 
 preguntas:
-  - pregunta: "¿Aprueba que la comunidad instale máquinas expendedoras de Coca-Cola y Nescafé en espacios comunes, para que el ingreso que generen sea un recurso de la comunidad?"
+  - pregunta: "¿Aprueba que la comunidad instale máquinas expendedoras (Amawa, Nescafé y Coca-Cola) en espacios comunes, para que el ingreso que generen sea un recurso de la comunidad?"
     opciones:
       - "Apruebo"
       - "Rechazo"

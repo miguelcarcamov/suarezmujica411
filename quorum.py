@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Quórums de la Ley 21.442 (art. 15) y evaluación de resultados.
 
+Texto vigente: https://www.bcn.cl/leychile/navegar?idNorma=1174663&idParte=10326608
+
 Tipos de sesión:
   ordinaria  constitución >= 33 % de los derechos; aprueba la mayoría absoluta de los asistentes
   absoluta   constitución y aprobación > 50 % de los derechos del condominio

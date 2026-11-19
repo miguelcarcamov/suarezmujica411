@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block titulo %}Votaciones{% endblock %}
 {% block contenido %}
+<div class="portada">
 <section class="intro">
   <h1>Votaciones</h1>
-  <p>Aquí encuentras las consultas de la comunidad, sus antecedentes y el enlace para votar.</p>
+  <p>Abre una ficha para leer de qué se trata. Cuando la votación esté abierta, se vota desde el celular o el computador. No hay que instalar nada.</p>
 </section>
 
 {% if not elecciones %}
@@ -22,7 +23,9 @@
     {% else %}
       <p class="fechas">Fechas por confirmar</p>
     {% endif %}
+    <span class="ir">Ver la ficha</span>
   </a>
 {% endfor %}
+</div>
 </div>
 {% endblock %}

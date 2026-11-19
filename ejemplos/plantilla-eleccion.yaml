@@ -16,7 +16,9 @@ cierre:   "2026-12-12 21:00"
 
 # Modalidad: "Consulta por escrito", "Asamblea virtual", etc.
 modalidad: "Consulta por escrito"
-# Tipo de sesión según la materia (art. 15, Ley 21.442):
+# Tipo de sesión según la materia. La ficha enlaza el art. 15 de la Ley 21.442
+# (https://www.bcn.cl/leychile/navegar?idNorma=1174663&idParte=10326608).
+# No repitas ese quórum en los antecedentes.
 #   ordinaria  -> constituye 33 %; aprueba mayoría de quienes participan
 #   absoluta   -> constituye y aprueba > 50 % de los derechos
 #   reforzada  -> constituye y aprueba >= 66 % de los derechos

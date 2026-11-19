@@ -1,7 +1,8 @@
 # Datos públicos de la comunidad. Sin RUT, nombres ni correos de copropietarios.
 comunidad: "Comunidad Suárez Mujica 411"
 direccion: "Suárez Mujica 411, Ñuñoa"
-contacto_email: ""
+# Casilla pública del comité. No poner correos de copropietarios.
+contacto_email: "jardinessuarezmujicacomitedead@gmail.com"
 # URL del sitio en GitHub Pages (sin / final).
 url_base: "https://miguelcarcamov.github.io/suarezmujica411"
 zona_horaria: "America/Santiago"
@@ -9,4 +10,4 @@ zona_horaria: "America/Santiago"
 # así el sitio muestra el 66 % y no un conteo que podría estar mal.
 total_unidades:
 # Color principal del sitio (hex)
-color: "#1f5f8b"
+color: "#2563eb"

@@ -21,7 +21,7 @@ Cada `push` a `main` publica el sitio automáticamente.
    y edita título, fechas, antecedentes y preguntas. Deja `borrador: true` hasta
    que fechas, antecedentes y el enlace de Belenios estén listos: así el sitio
    no muestra un botón de votar.
-   Indica el `tipo_sesion` según la materia (art. 15, Ley 21.442):
+   Indica el `tipo_sesion` según la materia. El sitio enlaza el [artículo 15 de la Ley 21.442](https://www.bcn.cl/leychile/navegar?idNorma=1174663&idParte=10326608) (texto vigente, Biblioteca del Congreso Nacional):
 
    | tipo_sesion | Para constituir | Para aprobar |
    |---|---|---|

@@ -2,15 +2,18 @@
 {% block titulo %}{{ e.titulo }}{% endblock %}
 {% block contenido %}
 <article class="eleccion" {% if e.borrador %}data-borrador="1"{% elif e.apertura %}data-apertura="{{ e.apertura|iso }}" data-cierre="{{ e.cierre|iso }}"{% endif %}>
-  <a class="volver" href="{{ raiz }}/index.html">← Todas las votaciones</a>
-  <span class="estado estado-{{ e.estado }}" data-estado>{% if e.estado == "borrador" %}En preparación{% endif %}</span>
-  <h1>{{ e.titulo }}</h1>
-  {% if e.resumen %}<p class="resumen">{{ e.resumen }}</p>{% endif %}
+  <a class="volver" href="{{ raiz }}/index.html">Todas las votaciones</a>
+  <header class="ficha-cabeza">
+    <span class="estado estado-{{ e.estado }}" data-estado>{% if e.estado == "borrador" %}En preparación{% endif %}</span>
+    <h1>{{ e.titulo }}</h1>
+  </header>
 
+  <div class="ficha-grid">
+  <aside class="ficha-lado">
   <div class="accion">
     <div data-mostrar="borrador" {% if e.estado != "borrador" %}hidden{% endif %}>
-      <p><strong>Ficha en preparación.</strong> Todavía no hay enlace para votar.</p>
-      <p class="tenue">Se publica cuando estén las fechas, los antecedentes y la elección en Belenios.</p>
+      <p><strong>Todavía no se puede votar.</strong></p>
+      <p>El botón «Ir a votar» aparece en este recuadro cuando la votación se abre.</p>
     </div>
     <div data-mostrar="proxima" {% if e.estado != "proxima" %}hidden{% endif %}>
       <p class="cuenta">La votación abre en <strong data-cuenta="apertura">…</strong></p>
@@ -26,44 +29,88 @@
     <div data-mostrar="cerrada" {% if e.estado != "cerrada" %}hidden{% endif %}>
       <p><strong>Votación cerrada.</strong></p>
       {% if e.url_resultados %}
-        <a class="boton secundario" href="{{ e.url_resultados }}" rel="noopener">Ver resultados verificables</a>
+        <a class="boton secundario" href="{{ e.url_resultados }}" rel="noopener">Ver los resultados</a>
       {% else %}
         <p class="tenue">Los resultados se publicarán aquí.</p>
       {% endif %}
     </div>
   </div>
 
-  {% if e.pendientes %}
-  <section class="pendientes">
-    <h2>Falta publicar antes de abrir</h2>
-    <ul>
-      {% for p in e.pendientes %}<li>{{ p }}</li>{% endfor %}
-    </ul>
-  </section>
-  {% endif %}
-
+  {% if e.sesion_informativa or e.apertura or e.cierre %}
   <dl class="datos">
     {% if e.sesion_informativa %}<div><dt>Sesión informativa</dt><dd>{{ e.sesion_informativa|fecha }}</dd></div>{% endif %}
-    <div><dt>Apertura</dt><dd>{% if e.apertura %}{{ e.apertura|fecha }}{% else %}Por confirmar{% endif %}</dd></div>
-    <div><dt>Cierre</dt><dd>{% if e.cierre %}{{ e.cierre|fecha }}{% else %}Por confirmar{% endif %}</dd></div>
-    {% if e.modalidad %}<div><dt>Modalidad</dt><dd>{{ e.modalidad }}</dd></div>{% endif %}
-    <div><dt>Cómputo</dt><dd>{{ "Ponderado por prorrateo" if e.ponderada else "Un voto por unidad" }}</dd></div>
+    {% if e.apertura %}<div><dt>Apertura</dt><dd>{{ e.apertura|fecha }}</dd></div>{% endif %}
+    {% if e.cierre %}<div><dt>Cierre</dt><dd>{{ e.cierre|fecha }}</dd></div>{% endif %}
   </dl>
+  {% endif %}
+  </aside>
+
+  <div class="ficha-principal">
+  <section>
+    <h2>La pregunta</h2>
+    {% for p in e.preguntas %}
+    <div class="pregunta">
+      <h3>{{ p.pregunta }}</h3>
+      <ul>{% for o in p.opciones %}<li>{{ o }}</li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section>
+    <h2>Quién puede votar</h2>
+    <div class="quien">
+      <h3>Copropietario</h3>
+      <p>Vota si está al día en todo lo que debe al edificio. Los gastos comunes forman parte de esa deuda. También vota quien tiene un convenio de pago con la administración y lo está cumpliendo. Si tiene más de un departamento, tiene que estar al día en todos.</p>
+      <h3>Arrendatario</h3>
+      {% if e.tipo_sesion == "reforzada" %}
+      <p>No vota solo por arrendar. En esta votación puede hacerlo únicamente con una autorización expresa del copropietario.</p>
+      {% else %}
+      <p>Puede votar por el copropietario si este no vota y no designa a otra persona, salvo que el copropietario haya avisado al comité y al administrador que no lo autoriza.</p>
+      {% endif %}
+    </div>
+  </section>
 
   <section class="quorum">
     <h2>Qué se necesita para aprobar</h2>
-    <p class="tenue">Tipo de sesión: <strong>{{ e.tipo_nombre }}</strong> (art. 15, Ley 21.442)</p>
     <div class="quorum-grid">
       <div>
-        <span class="q-num">{% if e.num_constituir %}{{ e.num_constituir }}<small> de {{ e.total_unidades }}</small>{% elif e.tipo_sesion == "reforzada" %}66 %{% elif e.tipo_sesion == "absoluta" %}&gt; 50 %{% else %}33 %{% endif %}</span>
-        <span class="q-txt">{{ e.req_constituir }}{% if e.num_constituir %} (deptos que votan){% endif %}</span>
+        <span class="q-etiq">Para que la votación valga</span>
+        {% if e.tipo_sesion == "reforzada" %}
+        <span class="q-num">66 %</span>
+        <span class="q-txt">Al menos el 66 % de los departamentos tiene que votar.{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
+        {% elif e.tipo_sesion == "ordinaria" %}
+        <span class="q-num">33 %</span>
+        <span class="q-txt">Al menos el 33 % de los departamentos tiene que votar.{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
+        {% else %}
+        <span class="q-num">&gt;50 %</span>
+        <span class="q-txt">Más de la mitad de los departamentos tiene que votar.{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
+        {% endif %}
       </div>
       <div>
-        <span class="q-num">{% if e.num_aprobar %}{{ e.num_aprobar }}<small> de {{ e.total_unidades }}</small>{% elif e.tipo_sesion == "reforzada" %}66 %{% elif e.tipo_sesion == "absoluta" %}&gt; 50 %{% else %}②{% endif %}</span>
-        <span class="q-txt">{{ e.req_aprobar }}{% if e.num_aprobar %} (votos a favor){% endif %}</span>
+        <span class="q-etiq">Para aprobar</span>
+        {% if e.tipo_sesion == "reforzada" %}
+        <span class="q-num">66 %</span>
+        <span class="q-txt">Al menos el 66 % de los departamentos tiene que votar a favor. No basta con que gane entre quienes votaron.{% if e.num_aprobar %} Son {{ e.num_aprobar }} de {{ e.total_unidades }}.{% endif %}</span>
+        {% elif e.tipo_sesion == "ordinaria" %}
+        <span class="q-num">Mayoría</span>
+        <span class="q-txt">La opción ganadora tiene que ser la mayoría de quienes votaron. Si vota menos gente que el 33 %, no se aprueba aunque una opción tenga más votos.</span>
+        {% else %}
+        <span class="q-num">&gt;50 %</span>
+        <span class="q-txt">Más de la mitad de los departamentos tiene que votar a favor. No basta con que gane entre quienes votaron.{% if e.num_aprobar %} Son {{ e.num_aprobar }} de {{ e.total_unidades }}.{% endif %}</span>
+        {% endif %}
       </div>
     </div>
-    <p class="tenue">Si no se alcanza la participación mínima, no hay acuerdo aunque gane una opción. ¡Tu voto cuenta para el quórum!</p>
+    <p>Si un departamento no vota, no cuenta ni a favor ni en contra. Tampoco ayuda a llegar a ese porcentaje.</p>
+    <p>Está en el <a href="https://www.bcn.cl/leychile/navegar?idNorma=1174663&amp;idParte=10326608" rel="noopener">artículo 15 de la Ley 21.442</a>.</p>
+  </section>
+
+  <section>
+    <h2>Lo que rige esta votación</h2>
+    <ul class="reglas">
+      <li>{% if e.modalidad == "Consulta por escrito" %}No hay que ir a una reunión. Cada departamento vota por internet, en el plazo que se publique en esta página.{% elif e.modalidad %}La forma de votar es: {{ e.modalidad }}.{% else %}Cada departamento vota por internet, en el plazo que se publique en esta página.{% endif %}</li>
+      <li>{% if e.ponderada %}Cada departamento pesa según su porcentaje en el reglamento.{% else %}Cada departamento tiene un voto, del mismo valor.{% endif %}</li>
+      <li>Hay que elegir una opción. No se puede dejar en blanco.</li>
+    </ul>
   </section>
 
   {% if e.antecedentes_html %}
@@ -79,37 +126,43 @@
   {% endif %}
 
   <section>
-    <h2>Qué se vota</h2>
-    {% for p in e.preguntas %}
-    <div class="pregunta">
-      <h3>{{ p.pregunta }}</h3>
-      <ul>{% for o in p.opciones %}<li>{{ o }}</li>{% endfor %}</ul>
-    </div>
-    {% endfor %}
-  </section>
-
-  <section>
-    <h2>Cómo votar</h2>
+    <h2>Cómo votar, en este orden</h2>
+    <p>Sigue los pasos del 1 al 6, en ese orden. Puedes usar el celular o el computador. No instales una aplicación ni crees una cuenta: se abre en el navegador, como esta página.</p>
     <ol class="pasos">
-      <li><strong>Revisa tu correo.</strong> Te llegarán dos mensajes de <em>Belenios</em>: uno con tu <em>credencial</em> y otro con tu <em>contraseña</em>. Revisa también spam.</li>
-      <li><strong>Pulsa “Ir a votar”</strong> en esta página cuando la votación esté abierta.</li>
-      <li><strong>Pega tu credencial</strong>, marca tu opción y confirma.</li>
-      <li><strong>Ingresa tu contraseña</strong> para emitir el voto. Guarda el <em>número de seguimiento</em> que aparece al final.</li>
+      <li><strong>Abre los dos correos de Belenios.</strong> Llegan al correo del departamento y pueden venir en cualquier orden. Uno trae un código largo. El otro trae una contraseña. Fíjate en el texto de cada correo, no en cuál llegó primero. Si no están en la bandeja de entrada, míralos en spam. No los reenvíes y no uses el código de otro departamento.</li>
+      <li><strong>Aprieta «Ir a votar» en esta página.</strong> El botón está en el recuadro que dice si ya se puede votar, y solo aparece cuando la votación está abierta. Desde ahí se abre la página donde se emite el voto.</li>
+      <li><strong>Pega el código largo</strong> en el recuadro que lo pide. En el celular: mantén el dedo sobre el código, elige Copiar; después mantén el dedo en el recuadro y elige Pegar. En el computador: selecciona el código y pégalo con Ctrl+V. En Mac, con Command+V. En este paso no escribas la contraseña.</li>
+      <li><strong>Elige una opción.</strong> Son las mismas de «La pregunta», más arriba. Después sigue al paso siguiente de esa página.</li>
+      <li><strong>Escribe la contraseña</strong> del otro correo, no el código, y confirma el voto.</li>
+      <li><strong>Anota o fotografía el número de comprobante</strong> que aparece al final, antes de cerrar esa página. Con ese número se comprueba que el voto quedó guardado, sin mostrar lo que votaste.</li>
     </ol>
   </section>
 
   <section>
-    <h2>Preguntas frecuentes</h2>
-    <details><summary>¿Alguien puede saber qué voté?</summary>
-      <p>No. Tu voto se cifra en tu propio dispositivo antes de enviarse. Ni el comité ni la administración ni el servidor pueden ver votos individuales; solo se descifra el total.</p></details>
-    <details><summary>¿Cómo sé que mi voto se contó?</summary>
-      <p>Con tu número de seguimiento puedes comprobar en la urna pública de Belenios que tu voto está registrado. Cualquiera puede recontar el resultado.</p></details>
-    <details><summary>¿Puedo cambiar mi voto?</summary>
-      <p>Sí, mientras la votación esté abierta puedes votar de nuevo. Solo se cuenta el último.</p></details>
-    <details><summary>No me llegó el correo</summary>
-      <p>Escribe a {% if cfg.contacto_email %}<a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% else %}el comité{% endif %} indicando tu número de departamento.</p></details>
-    <details><summary>¿Quién puede votar?</summary>
-      <p>Un voto por unidad, emitido por el propietario registrado o por quien tenga poder vigente, según el padrón verificado por el comité.</p></details>
+    <h2>Si algo no resulta</h2>
+    <p class="ayuda">Abre cada pregunta para leer la respuesta.</p>
+    <details><summary>¿Alguien puede ver lo que voté?</summary>
+      <p>No. Ni el comité, ni la administración, ni esta página, ni ninguna persona puede ver tu voto. Al cerrar se publica cuántos votos tuvo cada opción, no el voto de cada departamento.</p></details>
+    <details><summary>¿Puedo cambiar lo que voté?</summary>
+      <p>Sí, mientras la votación siga abierta. Entra otra vez con el mismo código y la misma contraseña, y elige la opción correcta. Solo cuenta el último envío. Cuando cierra, ya no se puede cambiar.</p></details>
+    <details><summary>¿Qué hago si no encuentro los correos?</summary>
+      <p>Revisa el spam y espera un rato: son dos correos, no uno. Si no aparecen, escribe a {% if cfg.contacto_email %}<a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% else %}el comité{% endif %} con tu número de departamento. No pidas el código de otro departamento.</p></details>
+    <details><summary>¿Puedo votar en el celular de otra persona?</summary>
+      <p>Sí. Usa el código y la contraseña de tu departamento. Al terminar, no dejes el código ni la contraseña guardados en ese celular. Si abriste tu correo ahí, cierra la sesión antes de devolverlo.</p></details>
+    <details><summary>¿Qué pasa si perdí el número de comprobante?</summary>
+      <p>El voto sigue guardado y se cuenta igual. Ese número no se puede enviar de nuevo, porque no queda asociado a tu nombre.</p></details>
   </section>
+
+  {% if e.pendientes %}
+  <details class="comite">
+    <summary>Datos que todavía faltan, a cargo del comité</summary>
+    <p>Esto lo completa el comité. No es algo que tengas que hacer tú.</p>
+    <ul>
+      {% for p in e.pendientes %}<li>{{ p }}</li>{% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+  </div>
+  </div>
 </article>
 {% endblock %}
