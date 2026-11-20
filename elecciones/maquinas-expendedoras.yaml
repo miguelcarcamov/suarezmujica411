@@ -1,5 +1,5 @@
-titulo: "Máquinas expendedoras (Amawa, Nescafé y Coca-Cola)"
-resumen: "Si se instalan máquinas expendedoras (Amawa, Nescafé y Coca-Cola) en espacios comunes, y ese ingreso queda para la comunidad."
+titulo: "Máquinas expendedoras (café Nescafé y bebidas VUELTA)"
+resumen: "Si la comunidad ratifica y mantiene los convenios con Rosetta SpA (VUELTA) para las máquinas ya instaladas, de modo que el aporte económico quede para la comunidad."
 borrador: false
 
 # Fechas en hora de Chile, formato AAAA-MM-DD HH:MM.
@@ -12,8 +12,8 @@ plazo_poder: "2026-11-23 20:00"
 modalidad: "Consulta por escrito"
 # Mayoría reforzada: constituir y aprobar con al menos el 66 % de los derechos.
 tipo_sesion: reforzada
-# Un voto por departamento: el comité indicó que todas las unidades pesan igual.
-ponderada: false
+# Ponderado por prorrateo (alícuota) del reglamento / listado de la administración.
+ponderada: true
 
 # Se completan al crear la elección en Belenios. Vacío = no hay botón de votar.
 url_belenios: ""
@@ -37,22 +37,68 @@ roles:
       detalle: "Vecino de confianza (idealmente fuera del comité). Guarda una parte de la llave del resultado."
   trustees_umbral: 2
 
-# Antecedentes de la propuesta (lugar, plazo, convenio). Vacío hasta que existan:
-# el quórum y la ley ya se explican una sola vez en la ficha.
+# Resumen para votar informado. Detalle en los PDF públicos enlazados abajo.
+antecedentes: |
+  ### Qué se consulta
+
+  En el edificio ya operan **dos máquinas** de Rosetta SpA (marca **VUELTA**):
+
+  - una de **café de grano Nescafé** (convenio VUELTA CAFÉ);
+  - una **expendedora de bebidas** (convenio VUELTA).
+
+  Antes hubo un “contrato de arrendamiento”; el **2 de septiembre de 2026** se reemplazó por convenios de **instalación y operación de un servicio** (no son arriendo ni comodato del espacio). Cada máquina usa unos **1 m²** en el lugar acordado con la administración; la comunidad sigue administrando ese espacio y se puede **reubicar** de común acuerdo.
+
+  Esta votación pide **ratificar y mantener** esos convenios, para que el aporte económico siga siendo un recurso de la comunidad.
+
+  ### Quién hace qué
+
+  - **VUELTA / Rosetta SpA:** instala, mantiene, repara, abastece y, al término, retira la máquina **a su costo**.
+  - **Comunidad:** permite la permanencia, facilita el acceso para mantención y abastecimiento.
+  - **Electricidad:** en el convenio de **café**, el consumo eléctrico es de cargo de la comunidad (ya considerado en el trato). En el de **bebidas**, la electricidad es de cargo de VUELTA. La máquina de café **no** se conecta a la red de agua del edificio.
+
+  ### Aporte a la comunidad
+
+  Cada mes VUELTA paga un **aporte** a la cuenta que indique la comunidad. Se calcula como un **porcentaje del margen bruto mensual** de esa máquina (ingresos netos menos el costo directo de lo vendido), según tramos en UF, de forma progresiva:
+
+  | Margen bruto mensual | Aporte |
+  | --- | --- |
+  | 0 – 15 UF | 2 % |
+  | 15 – 25 UF | 5 % |
+  | 25 – 35 UF | 10 % |
+  | 35 UF o más | 18 % |
+
+  VUELTA debe enviar un **reporte de ventas** dentro de los cinco primeros días hábiles del mes siguiente, y pagar el aporte en ese mismo plazo. Si no paga durante **dos meses seguidos**, la comunidad puede pedir el término anticipado.
+
+  Los montos concretos recibidos deben figurar en las **rendiciones de cuentas** a los copropietarios (Ley de Copropiedad).
+
+  ### Plazo y cómo terminar
+
+  Vigencia desde el **2 de septiembre de 2026**, por **12 meses**, con renovación automática por períodos iguales. En un período de renovación, cualquiera de las partes puede terminar avisando por escrito:
+
+  - café: al menos **30 días** de anticipación;
+  - bebidas: al menos **60 días** de anticipación.
+
+  Al término, VUELTA retira la máquina y deja el espacio en buen estado (desgaste normal).
+
+  ### Documentos
+
+  Abajo están los convenios en **versión pública** (mismo contenido operativo y económico; se omitieron RUT, cédulas y teléfonos de personas naturales). Los originales firmados los guarda el comité.
+
+documentos:
+  - nombre: "Convenio café Nescafé / VUELTA CAFÉ (PDF público)"
+    url: "../../static/docs/convenio-vuelta-cafe.pdf"
+  - nombre: "Convenio bebidas / VUELTA (PDF público)"
+    url: "../../static/docs/convenio-vuelta-bebidas.pdf"
 
 pendientes:
-  - "Número de departamentos con derecho a voto"
+  - "Confirmar prorrateo de cada unidad en Belenios (peso = alícuota)"
   - "Enlace de Belenios (url_belenios) antes de la apertura"
   - "Nombre de quien lleva las credenciales (rol Belenios)"
   - "Nombres de los 3 trustees (descifrado del resultado)"
-  - "Lugar exacto donde irían las máquinas"
-  - "Plazo del convenio y cómo se puede terminar"
-  - "Cómo se calcula el ingreso y a qué fondo entra"
-  - "Quién las opera, las reponen y paga la energía"
-  - "Propuesta o contrato, con enlace de descarga"
+  - "Indicar en esta ficha el lugar exacto de cada máquina en el edificio"
 
 preguntas:
-  - pregunta: "¿Aprueba que la comunidad instale máquinas expendedoras (Amawa, Nescafé y Coca-Cola) en espacios comunes, para que el ingreso que generen sea un recurso de la comunidad?"
+  - pregunta: "¿Aprueba que la comunidad ratifique y mantenga los convenios con Rosetta SpA (VUELTA) para las máquinas de café Nescafé y de bebidas ya instaladas en espacios comunes, de modo que el aporte económico siga siendo un recurso de la comunidad?"
     # En Belenios: solo estas dos respuestas + activar "Blank vote is allowed"
     # (voto en blanco nativo). No poner "Nulo" como opción: en Chile el nulo es
     # una cédula inválida; Belenios descarta boletas inválidas y no las cuenta.

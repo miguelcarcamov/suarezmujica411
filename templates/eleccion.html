@@ -85,30 +85,30 @@
         <span class="q-etiq">Para que la votación valga</span>
         {% if e.tipo_sesion == "reforzada" %}
         <span class="q-num">66 %</span>
-        <span class="q-txt">Al menos el 66 % de los departamentos tiene que votar.{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
+        <span class="q-txt">{% if e.ponderada %}Al menos el 66 % de los derechos (prorrateo) tiene que votar.{% else %}Al menos el 66 % de los departamentos tiene que votar.{% endif %}{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
         {% elif e.tipo_sesion == "ordinaria" %}
         <span class="q-num">33 %</span>
-        <span class="q-txt">Al menos el 33 % de los departamentos tiene que votar.{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
+        <span class="q-txt">{% if e.ponderada %}Al menos el 33 % de los derechos (prorrateo) tiene que votar.{% else %}Al menos el 33 % de los departamentos tiene que votar.{% endif %}{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
         {% else %}
         <span class="q-num">&gt;50 %</span>
-        <span class="q-txt">Más de la mitad de los departamentos tiene que votar.{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
+        <span class="q-txt">{% if e.ponderada %}Más de la mitad de los derechos (prorrateo) tiene que votar.{% else %}Más de la mitad de los departamentos tiene que votar.{% endif %}{% if e.num_constituir %} Son {{ e.num_constituir }} de {{ e.total_unidades }}.{% endif %}</span>
         {% endif %}
       </div>
       <div>
         <span class="q-etiq">Para aprobar</span>
         {% if e.tipo_sesion == "reforzada" %}
         <span class="q-num">66 %</span>
-        <span class="q-txt">Al menos el 66 % de los departamentos tiene que votar a favor. No basta con que gane entre quienes votaron.{% if e.num_aprobar %} Son {{ e.num_aprobar }} de {{ e.total_unidades }}.{% endif %}</span>
+        <span class="q-txt">{% if e.ponderada %}Al menos el 66 % de los derechos tiene que votar a favor (Apruebo). No basta con que gane entre quienes votaron.{% else %}Al menos el 66 % de los departamentos tiene que votar a favor. No basta con que gane entre quienes votaron.{% endif %}{% if e.num_aprobar %} Son {{ e.num_aprobar }} de {{ e.total_unidades }}.{% endif %}</span>
         {% elif e.tipo_sesion == "ordinaria" %}
         <span class="q-num">Mayoría</span>
         <span class="q-txt">La opción ganadora tiene que ser la mayoría de quienes votaron. Si vota menos gente que el 33 %, no se aprueba aunque una opción tenga más votos.</span>
         {% else %}
         <span class="q-num">&gt;50 %</span>
-        <span class="q-txt">Más de la mitad de los departamentos tiene que votar a favor. No basta con que gane entre quienes votaron.{% if e.num_aprobar %} Son {{ e.num_aprobar }} de {{ e.total_unidades }}.{% endif %}</span>
+        <span class="q-txt">{% if e.ponderada %}Más de la mitad de los derechos tiene que votar a favor. No basta con que gane entre quienes votaron.{% else %}Más de la mitad de los departamentos tiene que votar a favor. No basta con que gane entre quienes votaron.{% endif %}{% if e.num_aprobar %} Son {{ e.num_aprobar }} de {{ e.total_unidades }}.{% endif %}</span>
         {% endif %}
       </div>
     </div>
-    <p>Si un departamento no vota, no cuenta ni a favor ni en contra. Tampoco ayuda a llegar a ese porcentaje.</p>
+    <p>{% if e.ponderada %}Si un departamento no vota, sus derechos no cuentan ni a favor ni en contra. Tampoco ayudan a llegar a ese porcentaje.{% else %}Si un departamento no vota, no cuenta ni a favor ni en contra. Tampoco ayuda a llegar a ese porcentaje.{% endif %}</p>
     <p>Está en el <a href="https://www.bcn.cl/leychile/navegar?idNorma=1174663&amp;idParte=10326608" rel="noopener">artículo 15 de la Ley 21.442</a>.</p>
   </section>
 
@@ -116,7 +116,7 @@
     <h2>Lo que rige esta votación</h2>
     <ul class="reglas">
       <li>{% if e.modalidad == "Consulta por escrito" %}No hay que ir a una reunión. Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% elif e.modalidad %}La forma de votar es: {{ e.modalidad }}. El voto se emite en Belenios, no en esta página.{% else %}Cada departamento vota por internet en Belenios, en el plazo que se publique aquí.{% endif %}</li>
-      <li>{% if e.ponderada %}Cada departamento pesa según su porcentaje en el reglamento.{% else %}Cada departamento tiene un voto, del mismo valor.{% endif %}</li>
+      <li>{% if e.ponderada %}Cada departamento pesa según su prorrateo (porcentaje de derechos en el condominio). Un depto más grande pesa más que uno más chico.{% else %}Cada departamento tiene un voto, del mismo valor.{% endif %}</li>
       <li>En Belenios puedes marcar Apruebo, Rechazo o voto en blanco. El blanco se registra, pero no cuenta a favor para el 66 %. Un voto nulo, como en Chile, sería una papeleta inválida: Belenios no la acepta en la urna.</li>
       <li>Esta página solo informa. Tocando una opción aquí no pasa nada: no son botones de voto.</li>
     </ul>
@@ -190,7 +190,7 @@
     <details><summary>¿Qué pasa si voto en blanco o nulo?</summary>
       <p><strong>Blanco:</strong> en Chile (elecciones Servel) el blanco se registra, pero para calcular mayorías se trata como no emitido: no suma a ninguna candidatura. En esta consulta, Belenios puede ofrecer voto en blanco nativo: queda contado como blanco y <strong>no suma a Apruebo</strong> para el 66 %.</p>
       <p><strong>Nulo:</strong> en Chile es una cédula inválida (marcas confusas, más de una preferencia, etc.). También se trata como no emitido para la mayoría. En Belenios no hay botón «Nulo»: si el voto es inválido, el sistema no lo deja entrar a la urna.</p>
-      <p>Para aprobar hace falta el 66 % de los departamentos en <strong>Apruebo</strong>. Blanco, nulo o no votar no ayudan a ese 66 %.</p></details>
+      <p>Para aprobar hace falta el 66 % de los {% if e.ponderada %}<strong>derechos</strong> (prorrateo){% else %}<strong>departamentos</strong>{% endif %} en <strong>Apruebo</strong>. Blanco, nulo o no votar no ayudan a ese 66 %.</p></details>
     <details><summary>¿El comité o la administración pueden manipular el resultado?</summary>
       <p>No. El total se arma en Belenios a partir de los votos cifrados. Varios trustees tienen que participar para abrir ese total. Además, cualquiera puede revisar la urna pública y el resultado en Belenios. Los roles (administrador, credenciales y trustees) están publicados más arriba, en «Cómo se cuida que el proceso sea limpio».</p></details>
     {% if e.tipo_sesion == "reforzada" %}
@@ -207,7 +207,7 @@
         <li><strong>Habla con tu copropietario</strong> y solicítale el poder simple para votar en esta consulta, por tu departamento.</li>
         <li><strong>El copropietario firma</strong> esa autorización a tu nombre y con el número de departamento.</li>
         <li><strong>Envíenla al comité</strong> dentro del plazo de recepción{% if cfg.contacto_email %}, a <a href="mailto:{{ cfg.contacto_email }}">{{ cfg.contacto_email }}</a>{% endif %}. Incluyan el correo donde debe llegar Belenios.</li>
-        <li><strong>Esperen la confirmación del comité</strong> dentro del plazo de respuesta. Si aprueban, tu correo queda en la lista <em>antes</em> de la apertura. Un departamento = un voto: no votan dueño y arrendatario a la vez.</li>
+        <li><strong>Esperen la confirmación del comité</strong> dentro del plazo de respuesta. Si aprueban, tu correo queda en la lista <em>antes</em> de la apertura. {% if e.ponderada %}Un departamento = un voto con el peso de su prorrateo{% else %}Un departamento = un voto{% endif %}: no votan dueño y arrendatario a la vez.</li>
         <li><strong>Al abrir la votación,</strong> Belenios envía el acceso a ese correo. Ahí votas en Belenios (no en esta página).</li>
       </ol>
       <p>Si el copropietario no autoriza, o el poder llega fuera de plazo, no puedes votar tú. El correo y el voto quedan para el propietario registrado.</p></details>

@@ -10,8 +10,9 @@ Uso:
   Agrega --tipo ordinaria|absoluta|reforzada para calcular los quórums en el reporte.
 
 CSV de entrada (encabezados obligatorios, separador , o ;):
-  depto,nombre,rut,email
-  - columna "prorrateo" (porcentaje, ej. 0,8523) solo se necesita con --ponderado.
+  depto,nombre,email
+  - columna "rut" opcional (si viene, se valida; no se envía a Belenios).
+  - columna "prorrateo" solo con --ponderado: % (suma ≈ 100) o fracción/alícuota (suma ≈ 1).
   - columna opcional "habilitado" (si/no): "no" excluye la unidad (p. ej. morosos,
     solo si el reglamento lo permite).
 
@@ -50,7 +51,7 @@ def leer(ruta, ponderado):
     dialecto = csv.Sniffer().sniff(texto.splitlines()[0], delimiters=",;")
     filas = list(csv.DictReader(texto.splitlines(), dialect=dialecto))
     filas = [{(k or "").strip().lower(): (v or "").strip() for k, v in f.items()} for f in filas]
-    requeridas = {"depto", "nombre", "rut", "email"} | ({"prorrateo"} if ponderado else set())
+    requeridas = {"depto", "nombre", "email"} | ({"prorrateo"} if ponderado else set())
     faltan = requeridas - set(filas[0] if filas else {})
     if faltan:
         sys.exit(f"Faltan columnas en el CSV: {', '.join(sorted(faltan))}")
@@ -66,39 +67,75 @@ def main():
 
     errores, avisos, votantes, excluidos = [], [], [], []
     deptos = Counter(f["depto"] for f in filas)
-    correos = Counter(f["email"].lower() for f in filas)
+    email_a_deptos = {}
+    for f in filas:
+        if f.get("habilitado", "si").lower() in ("no", "n", "0", "false"):
+            continue
+        em = f["email"].lower().strip()
+        if em:
+            email_a_deptos.setdefault(em, []).append(f["depto"])
 
+    sin_rut = 0
     for n, f in enumerate(filas, start=2):
         ref = f"línea {n} (depto {f['depto'] or '?'})"
+        excluido = f.get("habilitado", "si").lower() in ("no", "n", "0", "false")
         if not f["depto"]:
             errores.append(f"{ref}: falta depto")
         elif deptos[f["depto"]] > 1:
             errores.append(f"{ref}: depto repetido; debe haber un solo votante por unidad")
-        if not rut_valido(f["rut"]):
-            errores.append(f"{ref}: RUT inválido ({f['rut']!r})")
-        if not EMAIL.match(f["email"]):
-            errores.append(f"{ref}: correo inválido ({f['email']!r})")
-        elif correos[f["email"].lower()] > 1:
-            avisos.append(f"{ref}: el correo {f['email']} se repite (una persona con varias unidades recibirá varias credenciales)")
-        peso = 1
+        rut = f.get("rut", "").strip()
+        if rut and not rut_valido(rut):
+            errores.append(f"{ref}: RUT inválido ({rut!r})")
+        elif not rut:
+            sin_rut += 1
         if ponderado:
             try:
                 pct = float(f["prorrateo"].replace(",", "."))
-                peso = round(pct * ESCALA)
-                if peso <= 0:
-                    raise ValueError
             except ValueError:
                 errores.append(f"{ref}: prorrateo inválido ({f['prorrateo']!r})")
-        if f.get("habilitado", "si").lower() in ("no", "n", "0", "false"):
+                pct = None
+            else:
+                f["_pct"] = pct
+        if excluido:
             excluidos.append(f["depto"])
             continue
-        votantes.append((f["email"].lower(), re.sub(r"[^\w\-]", "", f["depto"]), peso))
+        if not EMAIL.match(f["email"]):
+            errores.append(f"{ref}: correo inválido ({f['email']!r})")
+            continue
+        votantes.append((f["email"].lower(), re.sub(r"[^\w\-]", "", f["depto"]), f if ponderado else 1))
+    if sin_rut:
+        avisos.append(f"{sin_rut} fila(s) sin RUT (ok para Belenios; útil solo para control interno)")
+    repetidos = {e: ds for e, ds in email_a_deptos.items() if len(ds) > 1}
+    if repetidos:
+        avisos.append(
+            f"{len(repetidos)} correo(s) en varias unidades (normal si es el mismo dueño; "
+            "Belenios envía una credencial por unidad):"
+        )
+        for email, ds in sorted(repetidos.items(), key=lambda x: (-len(x[1]), x[0])):
+            avisos.append(f"  {email} → {', '.join(ds)}")
 
     if ponderado:
-        total_pct = sum(float(f["prorrateo"].replace(",", ".") or 0) for f in filas
-                        if re.fullmatch(r"[\d.,]+", f["prorrateo"] or ""))
-        if abs(total_pct - 100) > 0.05:
-            avisos.append(f"la suma de prorrateos es {total_pct:.4f} % (se esperaba ~100 %)")
+        # Acepta prorrateo como % (suma ~100) o como fracción/alícuota (suma ~1).
+        pcts = [f["_pct"] for f in filas if "_pct" in f]
+        total_pct = sum(pcts)
+        if abs(total_pct - 1) <= 0.05:
+            escala = ESCALA * 100  # 0,004554 -> 4554
+            avisos.append(f"prorrateo detectado como fracción (suma {total_pct:.6f}); se convierte a peso × {escala}")
+        elif abs(total_pct - 100) <= 0.05:
+            escala = ESCALA  # 0,4554 % -> 4554
+        else:
+            avisos.append(f"la suma de prorrateos es {total_pct:.4f} (se esperaba ~1 o ~100)")
+            escala = ESCALA if total_pct > 2 else ESCALA * 100
+        convertidos = []
+        for email, login, f in votantes:
+            if "_pct" not in f:
+                continue
+            peso = round(f["_pct"] * escala)
+            if peso <= 0:
+                errores.append(f"depto {f['depto']}: prorrateo {f['prorrateo']!r} da peso 0")
+                continue
+            convertidos.append((email, login, peso))
+        votantes = convertidos
 
     for a in avisos:
         print("AVISO:", a)
@@ -113,18 +150,31 @@ def main():
         for email, login, peso in votantes:
             fh.write(f"{email},{login},{peso}\n" if ponderado else f"{email},{login}\n")
 
-    peso_total = sum(p for _, _, p in votantes)
+    peso_habilitado = sum(p for _, _, p in votantes)
+    if ponderado:
+        # Derechos del condominio = suma de pesos de todas las unidades del padrón
+        # (incluidas las no habilitadas), no solo de quienes pueden votar.
+        pesos_todas = []
+        for f in filas:
+            if "_pct" not in f:
+                continue
+            pesos_todas.append(round(f["_pct"] * escala))
+        total = sum(pesos_todas)
+        unidad = "de peso"
+        modo = f"ponderado por prorrateo (× {escala})"
+    else:
+        total = len(filas)
+        unidad = "unidades"
+        modo = "un voto por unidad"
     reporte = [
         f"Padrón: {ruta.name}",
         f"Unidades en padrón: {len(filas)}",
         f"Unidades habilitadas: {len(votantes)}",
         f"Excluidas: {len(excluidos)} {('(' + ', '.join(excluidos) + ')') if excluidos else ''}",
-        f"Modo: {'ponderado por prorrateo (peso = % x ' + str(ESCALA) + ')' if ponderado else 'un voto por unidad'}",
-        f"Peso total habilitado: {peso_total}",
+        f"Modo: {modo}",
+        f"Peso total habilitado: {peso_habilitado}" if ponderado else f"Unidades habilitadas (conteo): {len(votantes)}",
+        f"Derechos totales del condominio: {total} {unidad}",
     ]
-    total = len(filas) if not ponderado else ESCALA * 100
-    unidad = "unidades" if not ponderado else "de peso"
-    reporte.append(f"Derechos totales del condominio: {total} {unidad}")
     tipos = [sys.argv[sys.argv.index("--tipo") + 1]] if "--tipo" in sys.argv else list(quorum.TIPOS)
     for tipo in tipos:
         constituir, aprobar = quorum.umbrales(tipo, total)

@@ -57,7 +57,9 @@ def cargar_eleccion(ruta, tz, cfg):
     if total and not d.get("ponderada"):
         d["num_constituir"], d["num_aprobar"] = quorum.umbrales(tipo, int(total))
         d["total_unidades"] = int(total)
-    d["antecedentes_html"] = markdown.markdown(d.get("antecedentes") or "")
+    d["antecedentes_html"] = markdown.markdown(
+        d.get("antecedentes") or "", extensions=["tables", "fenced_code"]
+    )
     d["documentos"] = [doc for doc in d.get("documentos") or [] if doc.get("url")]
     d["pendientes"] = [str(p).strip() for p in (d.get("pendientes") or []) if str(p).strip()]
     roles = d.get("roles") or {}

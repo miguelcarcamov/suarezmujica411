@@ -32,16 +32,22 @@ Cada `push` a `main` publica el sitio automáticamente.
    El sitio muestra cuántos deptos deben votar y cuántos votos a favor se necesitan,
    a partir de `total_unidades` en `config.yaml`.
    Para validar sin publicar, ejecuta `python build.py --check`.
-2. **Padrón (en tu computador, nunca en GitHub):** exporta la lista de propietarios
-   (p. ej. desde ComunidadFeliz) a `padron/padron.csv` con las columnas
-   `depto,nombre,rut,email[,habilitado]` y ejecuta:
+2. **Padrón (en tu computador, nunca en GitHub):** deja en `datos_info/` el Excel de
+   residentes y el de morosas, y genera el CSV + valida en un solo paso:
    ```
-   python padron.py padron/padron.csv               # un voto por depto
-   python padron.py padron/padron.csv --ponderado   # si algún día se pondera (requiere columna prorrateo)
+   python padron_desde_excel.py --y-validar --ponderado --tipo reforzada
    ```
-   El script valida RUT (dígito verificador), correos y deptos duplicados. Genera `padron/belenios_votantes.txt` y
-   `padron/reporte.txt`, este último con las unidades habilitadas y los quórums
-   de cada tipo de sesión (o solo del tipo indicado con `--tipo absoluta`).
+   Eso escribe `padron/padron.csv` (una fila por unidad, correo del dueño,
+   morosas en `habilitado=no`), `padron/avisos_desde_excel.txt` y
+   `padron/pendientes_correo.csv` (deptos habilitados sin mail de dueño). Los
+   correos que se repiten entre deptos son normales si es el mismo dueño:
+   Belenios manda una credencial por unidad. Si solo quieres armar el CSV:
+   ```
+   python padron_desde_excel.py
+   python padron.py padron/padron.csv --ponderado --tipo reforzada
+   ```
+   `padron.py` valida correos/deptos (y RUT si viene), y genera
+   `padron/belenios_votantes.txt` más `padron/reporte.txt` con los quórums.
 3. **Belenios:** crea la elección en el servidor público con las mismas preguntas.
    En "Votantes", pega `belenios_votantes.txt` y luego envía las credenciales.
    Copia el enlace de la elección en `url_belenios` del YAML y haz push.
@@ -53,8 +59,8 @@ Cada `push` a `main` publica el sitio automáticamente.
    Luego pega el enlace de resultados en `url_resultados` y haz push.
 
 **Decisiones de esta comunidad, a contrastar con el reglamento antes de abrir:**
-(a) un voto por departamento, porque todas las unidades pesan igual;
-(b) las máquinas expendedoras se tratan con mayoría reforzada (66 %);
+(a) voto ponderado por prorrateo (alícuota de cada unidad);
+(b) las máquinas expendedoras se tratan con mayoría reforzada (66 % de los derechos);
 (c) los quórums se calculan sobre el total de unidades, incluidas las no habilitadas;
 (d) en una consulta ordinaria, "asistentes" equivale a quienes votan.
 `total_unidades` en `config.yaml` sigue vacío a propósito: el sitio muestra el
@@ -73,10 +79,12 @@ volver a publicar para que cambien.
 
 ## Pesos en Belenios (solo con --ponderado)
 
-Con el formato `correo,login,peso`, el peso es un entero igual al
-prorrateo × 10 000 (un 0,8523 % queda como 8523). Antes de la primera votación
-real, confirma en la documentación de Belenios que el servidor que usen acepta
-pesos con ese formato, y haz una votación de prueba con 3–4 personas.
+Con el formato `correo,login,peso`, el peso es un entero. El script acepta
+prorrateo como porcentaje (suma ≈ 100) o como fracción/alícuota (suma ≈ 1).
+Ejemplo con alícuota 0,004554 (suma de todas ≈ 1): peso 4554. Con porcentaje
+0,4554 (suma de todas ≈ 100): peso 4554. Usa
+`python padron.py padron/padron.csv --ponderado`. Haz una votación de prueba
+con 3–4 personas antes de la real.
 
 ## Desarrollo local
 

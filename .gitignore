@@ -6,6 +6,9 @@ _site/
 padron/*
 !padron/ejemplo.csv
 
+# Datos sensibles del edificio (residentes, morosos, contratos). Nunca se versiona.
+datos_info/
+
 # Entorno local y secretos
 .venv/
 __pycache__/
