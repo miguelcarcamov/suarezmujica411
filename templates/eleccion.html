@@ -144,7 +144,7 @@
         {% if e.roles.trustees %}
         <ul class="trustee-lista">
           {% for t in e.roles.trustees %}
-          <li><strong>{% if t.nombre %}{{ t.nombre }}{% else %}Por confirmar{% endif %}</strong>{% if t.detalle %} — {{ t.detalle }}{% endif %}</li>
+          <li><strong>{% if t.nombre %}{{ t.nombre }}{% else %}Por confirmar{% endif %}</strong>{% if t.detalle %}: {{ t.detalle }}{% endif %}</li>
           {% endfor %}
         </ul>
         {% endif %}

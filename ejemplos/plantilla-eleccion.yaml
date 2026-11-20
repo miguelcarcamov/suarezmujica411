@@ -46,6 +46,6 @@ pendientes: []
 preguntas:
   - pregunta: "¿Qué presupuesto aprueba?"
     opciones:
-      - "Empresa A — $18.500.000"
-      - "Empresa B — $21.000.000"
-      - "Empresa C — $19.900.000"
+      - "Empresa A: $18.500.000"
+      - "Empresa B: $21.000.000"
+      - "Empresa C: $19.900.000"

@@ -101,12 +101,12 @@ def main() -> None:
         (
             ROOT / "datos_info/Convenio_VUELTA_CAFE_-_Jardines_de_Suarez_Mujica.pdf",
             OUT / "convenio-vuelta-cafe.pdf",
-            "Convenio máquina de café Nescafé (VUELTA CAFÉ / Rosetta SpA) — versión pública",
+            "Convenio máquina de café Nescafé (VUELTA CAFÉ / Rosetta SpA), versión pública",
         ),
         (
             ROOT / "datos_info/Convenio_VUELTA_Bebidas_-_Jardines_de_Suarez_Mujica.pdf",
             OUT / "convenio-vuelta-bebidas.pdf",
-            "Convenio máquina expendedora de bebidas (VUELTA / Rosetta SpA) — versión pública",
+            "Convenio máquina expendedora de bebidas (VUELTA / Rosetta SpA), versión pública",
         ),
     ]
     for src, dest, titulo in pares:
