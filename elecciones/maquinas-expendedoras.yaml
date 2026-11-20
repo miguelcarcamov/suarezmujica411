@@ -38,57 +38,60 @@ roles:
   trustees_umbral: 2
 
 # Resumen para votar informado. Detalle en los PDF públicos enlazados abajo.
+# VUELTA y Amawa son la misma operación (Rosetta SpA).
 antecedentes: |
   ### Qué se consulta
 
-  En el edificio ya operan **tres máquinas**:
+  En el edificio ya operan **tres máquinas**, con **dos convenios** (operador Rosetta SpA; **VUELTA y Amawa son la misma marca/operación**):
 
-  1. **Café de grano Nescafé** (convenio VUELTA CAFÉ / Rosetta SpA).
-  2. **Coca-Cola**, expendedora de bebidas (convenio VUELTA / Rosetta SpA).
-  3. **Agua Amawa** (misma operación comercial vinculada a Rosetta / Amawa).
+  1. **Café de grano Nescafé** (convenio VUELTA CAFÉ).
+  2. **Agua Amawa** y **Coca-Cola** (bebidas): las **dos** quedan bajo el convenio VUELTA / Amawa de máquina(s) expendedora(s) de bebidas y productos.
 
-  Antes hubo un “contrato de arrendamiento”; el **2 de septiembre de 2026** se reemplazó, para café y bebidas, por convenios de **instalación y operación de un servicio** (no son arriendo ni comodato del espacio). Cada máquina de esos convenios usa unos **1 m²** en el lugar acordado con la administración; la comunidad sigue administrando ese espacio y se puede **reubicar** de común acuerdo.
+  Antes hubo un “contrato de arrendamiento”; el **2 de septiembre de 2026** se reemplazó por convenios de **instalación y operación de un servicio** (no son arriendo ni comodato del espacio). Cada máquina usa unos **1 m²** en el lugar acordado con la administración; la comunidad sigue administrando ese espacio y se puede **reubicar** de común acuerdo.
 
-  Esta votación pide **ratificar y mantener** las tres máquinas y los convenios asociados, para que el aporte económico siga siendo un recurso de la comunidad.
+  Esta votación pide **ratificar y mantener** las tres máquinas y esos convenios, para que el aporte económico siga siendo un recurso de la comunidad.
 
   ### Quién hace qué
 
-  - **Operador (VUELTA / Rosetta SpA, marca Amawa en agua):** instala, mantiene, repara, abastece y, al término, retira la máquina **a su costo** (según cada convenio).
+  - **Operador (Rosetta SpA, marcas VUELTA / Amawa / VUELTA CAFÉ):** instala, mantiene, repara, abastece y, al término, retira las máquinas **a su costo** (según cada convenio).
   - **Comunidad:** permite la permanencia y facilita el acceso para mantención y abastecimiento.
-  - **Electricidad (convenios publicados):** en **café**, el consumo eléctrico es de cargo de la comunidad (ya considerado en el trato). En **bebidas (Coca-Cola)**, la electricidad es de cargo de VUELTA. La máquina de café **no** se conecta a la red de agua del edificio (estanque propio).
+  - **Electricidad:** en el convenio de **café**, el consumo eléctrico es de cargo de la comunidad (ya considerado en el trato). En el convenio **VUELTA / Amawa** (agua y bebidas Coca-Cola), la electricidad es de cargo del operador. La máquina de café **no** se conecta a la red de agua del edificio (estanque propio).
 
   ### Aporte a la comunidad
 
-  En los convenios de café y de bebidas, cada mes el operador paga un **aporte** a la cuenta que indique la comunidad. Se calcula como un **porcentaje del margen bruto mensual** de esa máquina (ingresos netos menos el costo directo de lo vendido), según tramos en UF, de forma progresiva:
+  En ambos convenios, cada mes el operador paga un **aporte** a la cuenta que indique la comunidad. Se calcula como un **porcentaje del margen bruto mensual** de la máquina (ingresos netos menos el costo directo de lo vendido), según tramos en UF, de forma progresiva:
 
   | Margen bruto mensual | Aporte |
   | --- | --- |
-  | 0 – 15 UF | 2 % |
-  | 15 – 25 UF | 5 % |
-  | 25 – 35 UF | 10 % |
+  | 0 a 15 UF | 2 % |
+  | 15 a 25 UF | 5 % |
+  | 25 a 35 UF | 10 % |
   | 35 UF o más | 18 % |
 
   Debe enviarse un **reporte de ventas** dentro de los cinco primeros días hábiles del mes siguiente, y pagarse el aporte en ese mismo plazo. Si no se paga durante **dos meses seguidos**, la comunidad puede pedir el término anticipado.
 
   Los montos concretos recibidos deben figurar en las **rendiciones de cuentas** a los copropietarios (Ley de Copropiedad).
 
-  ### Plazo y cómo terminar (café y bebidas)
+  ### Plazo y cómo terminar
 
   Vigencia desde el **2 de septiembre de 2026**, por **12 meses**, con renovación automática por períodos iguales. En un período de renovación, cualquiera de las partes puede terminar avisando por escrito:
 
-  - café: al menos **30 días** de anticipación;
-  - bebidas (Coca-Cola): al menos **60 días** de anticipación.
+  - convenio de **café**: al menos **30 días** de anticipación;
+  - convenio **VUELTA / Amawa** (agua y Coca-Cola): al menos **60 días** de anticipación.
 
   Al término, el operador retira la máquina y deja el espacio en buen estado (desgaste normal).
 
   ### Documentos
 
-  Abajo están los convenios de **café** y de **bebidas (Coca-Cola)** en versión pública (mismo contenido operativo y económico; se omitieron RUT, cédulas y teléfonos de personas naturales). Los originales firmados los guarda el comité. El convenio específico de **agua Amawa** se publicará aquí cuando el comité lo tenga en versión pública.
+  Abajo están las versiones públicas de los dos convenios (mismo contenido operativo y económico; se omitieron RUT, cédulas y teléfonos de personas naturales). Los originales firmados los guarda el comité.
+
+  - El de **café** corresponde a la máquina Nescafé.
+  - El de **VUELTA / Amawa** corresponde a las **dos** máquinas de **agua Amawa** y **bebidas Coca-Cola** (en el PDF el texto habla de “la Máquina” en singular; en el edificio son esas dos unidades bajo esa misma operación).
 
 documentos:
   - nombre: "Convenio café Nescafé / VUELTA CAFÉ (PDF público)"
     url: "../../static/docs/convenio-vuelta-cafe.pdf"
-  - nombre: "Convenio bebidas Coca-Cola / VUELTA (PDF público)"
+  - nombre: "Convenio VUELTA / Amawa: agua y bebidas Coca-Cola (PDF público)"
     url: "../../static/docs/convenio-vuelta-bebidas.pdf"
 
 pendientes:
@@ -97,10 +100,9 @@ pendientes:
   - "Nombre de quien lleva las credenciales (rol Belenios)"
   - "Nombres de los 3 trustees (descifrado del resultado)"
   - "Indicar en esta ficha el lugar exacto de cada máquina en el edificio"
-  - "Publicar convenio de agua Amawa (versión pública) cuando esté disponible"
 
 preguntas:
-  - pregunta: "¿Aprueba que la comunidad ratifique y mantenga las tres máquinas expendedoras ya instaladas en espacios comunes (café Nescafé, Coca-Cola y agua Amawa), y los convenios asociados con Rosetta SpA / VUELTA / Amawa, de modo que el aporte económico siga siendo un recurso de la comunidad?"
+  - pregunta: "¿Aprueba que la comunidad ratifique y mantenga las tres máquinas expendedoras ya instaladas en espacios comunes (café Nescafé, Coca-Cola y agua Amawa), y los convenios asociados con Rosetta SpA (VUELTA / Amawa), de modo que el aporte económico siga siendo un recurso de la comunidad?"
     # En Belenios: solo estas dos respuestas + activar "Blank vote is allowed"
     # (voto en blanco nativo). No poner "Nulo" como opción: en Chile el nulo es
     # una cédula inválida; Belenios descarta boletas inválidas y no las cuenta.
